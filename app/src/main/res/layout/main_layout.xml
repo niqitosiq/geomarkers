@@ -112,7 +112,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/scrollView"
+                android:id="@+id/scroll"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="17dp"
@@ -175,20 +175,14 @@
                         android:background="@drawable/default_rectangle"
                         android:id="@+id/addbutton"
                         android:clickable="true"
-                        android:onClick="addmarker">
+                        android:onClick="addMarker"
+                        android:gravity="center">
 
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
+                        <ImageView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/addimg"
-                                android:background="@mipmap/cross" />
-                        </LinearLayout>
+                            android:id="@+id/addimg"
+                            android:background="@mipmap/cross" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

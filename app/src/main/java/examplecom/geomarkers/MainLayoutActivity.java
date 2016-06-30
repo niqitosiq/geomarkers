@@ -1,5 +1,6 @@
 package examplecom.geomarkers;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ActionMenuView;
@@ -26,8 +28,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.main_layout);
 
 
-        ImageView notepadicon = (ImageView) findViewById(R.id.notepadicon);
-        notepadicon.setImageResource(R.drawable.list);
+
 
         Integer[] MassIntro = new Integer[]{R.id.TodoList};
         for (Integer i=0; i < MassIntro.length; i++) {
@@ -40,45 +41,34 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
         }
     }
+
+
+
+
     public void addMarker(View view){
-        //Intent intObj = new Intent(this, SecondActivity.class);
-        //startActivity(intObj);
-        LinearLayout addbutton = (LinearLayout) findViewById(R.id.addbutton);
-        addbutton.removeAllViews();
-        LinearLayout layout = (LinearLayout)findViewById(R.id.others);
-        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout addbutton2 = new LinearLayout(this);
-        addbutton2.setBottom(5);
-        addbutton2.setClickable(true);
-        addbutton2.setBackgroundResource(R.drawable.default_rectangle);
-        addbutton2.setOnClickListener(this);
-        addbutton2.setId(R.id.addbutton);
-        addbutton2.setHorizontalGravity(View.TEXT_ALIGNMENT_CENTER);
-        layout.addView(addbutton2);
-        ImageView imgview = new ImageView(this);
-        imgview.setBackgroundResource(R.mipmap.cross);
-        addbutton2.addView(imgview);
-
-
+        Intent intObj = new Intent(this, SecondActivity.class);
+        startActivity(intObj);
 
     }
-    protected void redrawButtonAdd(View view){
-        LinearLayout addbutton = (LinearLayout) findViewById(R.id.addbutton);
-        addbutton.removeAllViews();
+
+    @SuppressLint("LongLogTag") // для вывода в лог большего объема текста.
+    private void addWithParams(String params){
         LinearLayout layout = (LinearLayout)findViewById(R.id.others);
-        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout addbutton2 = new LinearLayout(this);
-        addbutton2.setBottom(5);
-        addbutton2.setClickable(true);
-        addbutton2.setBackgroundResource(R.drawable.default_rectangle);
-        addbutton2.setOnClickListener(this);
-        addbutton2.setId(R.id.addbutton);
-        addbutton2.setHorizontalGravity(View.TEXT_ALIGNMENT_CENTER);
-        layout.addView(addbutton2);
-        ImageView imgview = new ImageView(this);
-        imgview.setBackgroundResource(R.mipmap.cross);
-        addbutton2.addView(imgview);
+        int inputNumber = (layout.getChildCount()-1);
+        //вывод кол-ва дочерних элементов в логи
+        Log.i("количество дочерних элементов", String.valueOf(inputNumber));
+        // Инициализация вида и параметров будущей кнопки
+        LinearLayout addedbutton = new LinearLayout(this);
+        addedbutton.setBottom(5);
+        addedbutton.setClickable(true);
+        addedbutton.setBackgroundResource(R.drawable.default_rectangle);
+        addedbutton.setOnClickListener(this);
+        addedbutton.setId(R.id.addbutton);
+        addedbutton.setHorizontalGravity(View.TEXT_ALIGNMENT_CENTER);
+        // Добавление
+        layout.addView(addedbutton, inputNumber);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -89,7 +79,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         newlayout.setOrientation(LinearLayout.HORIZONTAL);
         newlayout.setBottom(5);
         layout.addView(newlayout);
-        redrawButtonAdd(v);
 
     }
 }

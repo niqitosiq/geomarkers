@@ -183,7 +183,9 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/addimg"
                             android:background="@mipmap/cross" />
+
                     </LinearLayout>
+
                 </LinearLayout>
             </ScrollView>
 

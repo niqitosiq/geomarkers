@@ -5,12 +5,14 @@
     android:layout_height="match_parent"
     tools:context="examplecom.geomarkers.MainLayoutActivity"
     android:background="@drawable/background_gradient">
-
+    <include layout="@layout/toolbar_activity"
+        android:id="@+id/custom_toolbar"/>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/background">
+        android:id="@+id/background"
+        android:layout_below="@+id/custom_toolbar">
 
         <LinearLayout
             android:orientation="vertical"
@@ -179,11 +181,10 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/addimg"
-                            android:background="@mipmap/cross" />
-
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:id="@+id/imageView9"
+                            android:src="@drawable/plus" />
                     </LinearLayout>
 
                 </LinearLayout>

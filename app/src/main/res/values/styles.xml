@@ -1,14 +1,8 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="GeomarkersTheme" parent="AppTheme" >
         <item name="colorPrimary">#516265</item>
         <item name="colorAccent">#a3b6be</item>
         <item name="colorPrimaryDark">#7c8d94</item>

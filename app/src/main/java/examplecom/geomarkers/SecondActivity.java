@@ -1,10 +1,12 @@
 package examplecom.geomarkers;
 
 
+        import android.content.Intent;
         import android.graphics.Typeface;
         import android.support.v7.app.ActionBarActivity;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
+        import android.view.View;
         import android.widget.TextView;
 
 
@@ -25,4 +27,13 @@ public class SecondActivity extends AppCompatActivity {
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
         }
     }
+
+
+    public void comeback(View v){
+
+        Intent intObj = new Intent(this, MainLayoutActivity.class);
+        startActivity(intObj);
+
+    }
+
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GeomarkersTheme" parent="android:Theme.Holo.Light.NoActionBar">
+        <item name="colorPrimary">#516265</item>
+        <item name="colorAccent">#a3b6be</item>
+        <item name="colorPrimaryDark">#7c8d94</item>
+        <item name="android:colorPrimary">#7c8d94</item>
+        <item name="android:colorPrimaryDark">#a3b6be</item>
+    </style>
+</resources>

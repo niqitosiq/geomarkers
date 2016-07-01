@@ -118,7 +118,9 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/title_edit"
                             android:layout_margin="5dp"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+                            android:inputType="text"
+                            android:maxLength="64" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -140,7 +142,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/description_edit"
-                            android:layout_margin="5dp" />
+                            android:layout_margin="5dp"
+                            android:inputType="text"
+                            android:editable="false"
+                            android:maxLength="256" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -239,7 +244,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:id="@+id/half2">
+                        android:id="@+id/half2"
+                        android:onClick="okButton">
 
                         <FrameLayout
                             android:layout_width="match_parent"

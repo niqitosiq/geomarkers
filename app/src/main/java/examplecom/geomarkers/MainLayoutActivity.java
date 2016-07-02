@@ -15,6 +15,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ActionMenuView;
@@ -36,7 +37,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        //db.delete("geomarkers",null,null);
+        //db.delete("geomarkers",null,null);            //если присутствуют баги разкоммитить это и запустить один раз (очищает Базу данных)
 
         Integer[] MassIntro = new Integer[]{R.id.TodoList};
         for (Integer i = 0; i < MassIntro.length; i++) {
@@ -44,9 +45,10 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Intro.otf"));
         }
         LinearLayout layout = (LinearLayout) findViewById(R.id.others);
+        layout.removeAllViewsInLayout();
 
 
-        //layout.removeAllViewsInLayout();
+        //layout.removeAllViewsInLayout(); ////если присутствуют баги разкоммитить это и запустить один раз
         //дальше происходят страшные вещи которые я сам не понимаю однако попытался прокоментировать;
 
 
@@ -59,25 +61,42 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         cv.put("name",nametext);
         cv.put("description", description);
         int signal=0;
-        if(swpos){signal=1;}//переврдим булеан тип в интеджер для хранения в ДБ
+        if(swpos){signal=1;}//переврдим булеан тип в интеджер для хранения в БД
         cv.put("signal",signal);
         db.insert("geomarkers",null,cv);
-
         //запросы к БД + построение списка
         Cursor cursor = db.query("geomarkers",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
             int columnIdIndex = cursor.getColumnIndex("id");
             int columnNameIndex = cursor.getColumnIndex("name");
             do{
-                int id = 1;
-                //int id = cursor.getInt(columnIdIndex);
+                int id = cursor.getInt(columnIdIndex);
                 String name = cursor.getString(columnNameIndex);
-                //LinearLayout layout = (LinearLayout) findViewById(R.id.others);
+                LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout marketbutton = new LinearLayout(this);
+                marketbutton.setBackgroundResource(R.drawable.default_rectangle);//создание меток в списке
+                int gravity = Gravity.CENTER;
+                lParams.gravity = gravity;
+                layout.addView(marketbutton, lParams);
+                TextView tv = new TextView(this);
+                tv.setText(name);
+                tv.setTextSize(15);//пишем текст на метке
+                tv.setGravity(Gravity.CENTER);
+                marketbutton.addView(tv);
+
+
+
+
+
+
+              /*  int id = cursor.getInt(columnIdIndex);
+                String name = cursor.getString(columnNameIndex);
+                LinearLayout layout = (LinearLayout) findViewById(R.id.others);
                 LinearLayout addedbutton = new LinearLayout(this);
                 addedbutton.setBottom(5);                                                           //создание меток в списке
                 addedbutton.setClickable(false);//позже расширить функциОНАЛ
                 addedbutton.setBackgroundResource(R.drawable.default_rectangle);
-                addedbutton.setOnClickListener(this);
+                addedbutton.setOnClickListener(this);                                                   //мертвый кусок кода потом убрать если не нужен будет
                 addedbutton.setHorizontalGravity(View.TEXT_ALIGNMENT_CENTER);
                 // Добавление
                 try {
@@ -86,8 +105,14 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 TextView tv = new TextView(this);                                                   //пишем текст на метке
                 tv.setText(name);
                 tv.setTextSize(15);
-                addedbutton.addView(tv);//Никита, кастомизируй текст ну там белый цвет,посерединки
-                id++;
+                addedbutton.addView(tv);//Никита, кастомизируй текст ну там белый цвет,посерединки    */
+
+
+
+
+
+
+
             }while(cursor.moveToNext());
         }
         else{
@@ -97,10 +122,14 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         dbHelper.close();
 
        //LinearLayout layout = (LinearLayout) findViewById(R.id.others);
+        LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout addbutton = new LinearLayout(this);
+        int gravity = Gravity.CENTER;
+        lParams.gravity = gravity;
         addbutton.setBottom(5);
+        addbutton.setBackgroundResource(R.drawable.default_rectangle);
         addbutton.setOnClickListener(this);
-        layout.addView(addbutton);
+        layout.addView(addbutton,lParams);
         ImageView imgv = new ImageView(this);
         imgv.setBackgroundResource(R.drawable.plus);
         layout.addView(imgv);
@@ -137,39 +166,32 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
         startActivity(intObj);
-
     }
 }
 
 
-class DBHelper extends SQLiteOpenHelper {
 
+
+
+class DBHelper extends SQLiteOpenHelper {                                           //класс описывающий работу БД
     public DBHelper(Context context) {
         super(context, "database", null, 1);
     }
-
-
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table geomarkers ("
                 + "id integer primary key autoincrement,"
-                + "name text,"
+                + "name text,"                                  //метод создания БД
                 + "description text,"
                 + "geolocation text,"
                 + "signal integer" + ");");
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS + TABLE_NAME");
-                onCreate(db);
+                onCreate(db);                                       //метод обновления при устаревании версии (фактически не нужен)
     }
-
-
-
-
-
 }
 
 

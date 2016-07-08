@@ -29,7 +29,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
-
+int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +52,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         //layout.removeAllViewsInLayout(); ////если присутствуют баги разкоммитить это и запустить один раз
         //дальше происходят страшные вещи которые я сам не понимаю однако попытался прокоментировать;
 
-
-        //заполнение базыданных (далее БД) из СекондАктивити.класс
-        String nametext = getIntent().getStringExtra("nametext");//получаю данные с СекондАктивити.класс
-        String description = getIntent().getStringExtra("descriptiontext");//получаю данные с СекондАктивити.класс
-        //       скр
-        Boolean swpos = getIntent().getBooleanExtra("boolswitch",false);//получаю данные с СекондАктивити.класс
-        ContentValues cv = new ContentValues();//временная таблица данных ,которые получаем из СекондАктивити.класс
-        if(nametext!=null) {
-            cv.put("name", nametext);
-            cv.put("description", description);
-            int signal = 0;
-            if (swpos) {
-                signal = 1;
-            }//переврдим булеан тип в интеджер для хранения в БД
-            cv.put("signal", signal);
-            db.insert("geomarkers", null, cv);
-        }
-
-
-
-
         //запросы к БД + построение списка
         Cursor cursor = db.query("geomarkers",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
@@ -91,7 +70,9 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 tv.setText(name);
                 tv.setTextSize(15);//пишем текст на метке
                 tv.setGravity(Gravity.CENTER);
+                marketbutton.setOnClickListener(this);
                 marketbutton.addView(tv);
+                marketbutton.setId(id);
             }while(cursor.moveToNext());
         }
         else{
@@ -118,9 +99,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         plusParams.gravity = gravity;
         plusParams.setMargins(10,10,10,10);
         plusParams.gravity = Gravity.CENTER;
-
         addplus.addView(imgv, plusParams);
-
     }
 
 
@@ -128,35 +107,25 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+
+
+    if(v.getId()==R.id.addbutton) {
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
         startActivity(intObj);
     }
-}
-
-
-
-
-
-class DBHelper extends SQLiteOpenHelper {                                           //класс описывающий работу БД
-    public DBHelper(Context context) {
-        super(context, "database", null, 1);
+    else{
+        Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс для редактирования или удаления заметок
+        id = v.getId();
+        intObj.putExtra("id",id);
+        startActivity(intObj);
     }
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-
-        db.execSQL("create table geomarkers ("
-                + "id integer primary key autoincrement,"
-                + "name text,"                                  //метод создания БД
-                + "description text,"
-                + "geolocation text,"
-                + "signal integer" + ");");
-    }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS + TABLE_NAME");
-                onCreate(db);                                       //метод обновления при устаревании версии (фактически не нужен)
     }
 }
+
+
+
+
+
 
 
 

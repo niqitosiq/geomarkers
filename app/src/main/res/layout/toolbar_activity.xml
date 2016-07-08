@@ -3,7 +3,7 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="58dp"
+    android:layout_height="65dp"
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:titleTextColor="#ffffff">
@@ -17,6 +17,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView10"
 
-            android:layout_margin="10dp" />
+            android:src="@drawable/placeholder" />
     </LinearLayout>
 </android.support.v7.widget.Toolbar>

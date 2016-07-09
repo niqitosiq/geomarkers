@@ -1,32 +1,19 @@
 package examplecom.geomarkers;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ActionMenuView;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
 int id = 0;
@@ -45,11 +32,12 @@ int id = 0;
             TextView lay = (TextView) findViewById(MassIntro[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Intro.otf"));
         }
+
         LinearLayout layout = (LinearLayout) findViewById(R.id.others);
         layout.removeAllViewsInLayout();
 
 
-        //layout.removeAllViewsInLayout(); ////если присутствуют баги разкоммитить это и запустить один раз
+        // layout.removeAllViewsInLayout(); ////если присутствуют баги разкоммитить это и запустить один раз
         //дальше происходят страшные вещи которые я сам не понимаю однако попытался прокоментировать;
 
         //запросы к БД + построение списка
@@ -60,19 +48,18 @@ int id = 0;
             do{
                 int id = cursor.getInt(columnIdIndex);
                 String name = cursor.getString(columnNameIndex);
-                LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                LinearLayout marketbutton = new LinearLayout(this);
-                marketbutton.setBackgroundResource(R.drawable.default_rectangle);//создание меток в списке
-                int gravity = Gravity.CENTER;
-                lParams.gravity = gravity;
-                layout.addView(marketbutton, lParams);
-                TextView tv = new TextView(this);
-                tv.setText(name);
-                tv.setTextSize(15);//пишем текст на метке
-                tv.setGravity(Gravity.CENTER);
-                marketbutton.setOnClickListener(this);
-                marketbutton.addView(tv);
-                marketbutton.setId(id);
+                LayoutInflater inflater = LayoutInflater.from(this);
+                LinearLayout custom_layout = (LinearLayout) inflater.inflate(R.layout.empty_marker, null, false);
+                TextView textmarker = (TextView) custom_layout.findViewById(R.id.name);
+                custom_layout.setId(id);
+                textmarker.setText(name);
+                custom_layout.setOnClickListener(this);
+                layout.addView(custom_layout);
+                Integer[] MassRoboto = new Integer[]{R.id.name, R.id.description_text};
+                for (Integer i = 0; i < MassRoboto.length; i++) {
+                    TextView lay = (TextView) custom_layout.findViewById(MassRoboto[i]);
+                    lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
+                }
             }while(cursor.moveToNext());
         }
         else{
@@ -113,11 +100,18 @@ int id = 0;
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
         startActivity(intObj);
     }
-    else{
+    else if (v.getId()==R.id.settings) {
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс для редактирования или удаления заметок
         id = v.getId();
         intObj.putExtra("id",id);
         startActivity(intObj);
+    }
+    else{
+        /**/
+        LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
+        gonedlayout.setVisibility(View.VISIBLE);
+        ImageView imagegone = (ImageView) v.findViewById(R.id.more);
+        imagegone.setVisibility(View.GONE);
     }
     }
 }

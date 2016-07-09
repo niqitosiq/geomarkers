@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,7 @@ int id = 0;
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Intro.otf"));
         }
 
+
         LinearLayout layout = (LinearLayout) findViewById(R.id.others);
         layout.removeAllViewsInLayout();
 
@@ -51,6 +54,8 @@ int id = 0;
                 LayoutInflater inflater = LayoutInflater.from(this);
                 LinearLayout custom_layout = (LinearLayout) inflater.inflate(R.layout.empty_marker, null, false);
                 TextView textmarker = (TextView) custom_layout.findViewById(R.id.name);
+                ImageView shesterenka = (ImageView) custom_layout.findViewById(R.id.settings);
+                shesterenka.setOnClickListener(this);
                 custom_layout.setId(id);
                 textmarker.setText(name);
                 custom_layout.setOnClickListener(this);
@@ -84,9 +89,17 @@ int id = 0;
         imgv.setBackgroundResource(R.drawable.plus);
         LinearLayout.LayoutParams plusParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         plusParams.gravity = gravity;
-        plusParams.setMargins(10,10,10,10);
+        plusParams.setMargins(10, 10, 10, 10);
         plusParams.gravity = Gravity.CENTER;
         addplus.addView(imgv, plusParams);
+
+
+
+
+        LinearLayout gonedlayout = (LinearLayout) findViewById(R.id.main_action);
+        gonedlayout.setVisibility(View.GONE);
+        ImageView imagegone = (ImageView) findViewById(R.id.more);
+        imagegone.setVisibility(View.VISIBLE);
     }
 
 
@@ -102,9 +115,11 @@ int id = 0;
     }
     else if (v.getId()==R.id.settings) {
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс для редактирования или удаления заметок
-        id = v.getId();
+        LinearLayout layoutparent = (LinearLayout)v.getParent().getParent().getParent().getParent().getParent();
+        id =  layoutparent.getId();;
         intObj.putExtra("id",id);
         startActivity(intObj);
+        v.getParent();
     }
     else{
         /**/

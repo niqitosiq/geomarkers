@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
 int id = 0;
+    boolean openornot=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +49,18 @@ int id = 0;
         if(cursor.moveToFirst()){
             int columnIdIndex = cursor.getColumnIndex("id");
             int columnNameIndex = cursor.getColumnIndex("name");
+            int columnDescIndex = cursor.getColumnIndex("description");
             do{
                 int id = cursor.getInt(columnIdIndex);
                 String name = cursor.getString(columnNameIndex);
+                String description = cursor.getString(columnDescIndex);
                 LayoutInflater inflater = LayoutInflater.from(this);
                 LinearLayout custom_layout = (LinearLayout) inflater.inflate(R.layout.empty_marker, null, false);
                 TextView textmarker = (TextView) custom_layout.findViewById(R.id.name);
                 ImageView shesterenka = (ImageView) custom_layout.findViewById(R.id.settings);
                 shesterenka.setOnClickListener(this);
+                TextView desc = (TextView) custom_layout.findViewById(R.id.descriptionview);
+                desc.setText(description);
                 custom_layout.setId(id);
                 textmarker.setText(name);
                 custom_layout.setOnClickListener(this);
@@ -95,7 +100,8 @@ int id = 0;
 
 
 
-
+        TextView textviewdesc = (TextView)findViewById(R.id.descriptionview);
+        textviewdesc.setVisibility(View.GONE);
         LinearLayout gonedlayout = (LinearLayout) findViewById(R.id.main_action);
         gonedlayout.setVisibility(View.GONE);
         ImageView imagegone = (ImageView) findViewById(R.id.more);
@@ -123,10 +129,35 @@ int id = 0;
     }
     else{
         /**/
-        LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
-        gonedlayout.setVisibility(View.VISIBLE);
-        ImageView imagegone = (ImageView) v.findViewById(R.id.more);
-        imagegone.setVisibility(View.GONE);
+
+        if(!openornot) {
+            try {
+                LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
+                gonedlayout.setVisibility(View.VISIBLE);
+                TextView textviewdesc = (TextView)findViewById(R.id.descriptionview);
+                textviewdesc.setVisibility(View.VISIBLE);
+                ImageView imagegone = (ImageView) v.findViewById(R.id.more);
+                imagegone.setVisibility(View.GONE);
+
+                openornot = !openornot;
+            }catch (Exception e){
+                Log.e("error",e.toString());
+            }
+
+        }
+        else{
+            try {
+                LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
+                gonedlayout.setVisibility(View.GONE);
+                TextView textviewdesc = (TextView)findViewById(R.id.descriptionview);
+                textviewdesc.setVisibility(View.GONE);
+                ImageView imagegone = (ImageView) v.findViewById(R.id.more);
+                imagegone.setVisibility(View.VISIBLE);
+                openornot = !openornot;
+            }catch (Exception e){
+                Log.e("error",e.toString());
+            }
+            }
     }
     }
 }

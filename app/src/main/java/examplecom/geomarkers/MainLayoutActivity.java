@@ -100,12 +100,6 @@ int id = 0;
 
 
 
-        TextView textviewdesc = (TextView)findViewById(R.id.descriptionview);
-        textviewdesc.setVisibility(View.GONE);
-        LinearLayout gonedlayout = (LinearLayout) findViewById(R.id.main_action);
-        gonedlayout.setVisibility(View.GONE);
-        ImageView imagegone = (ImageView) findViewById(R.id.more);
-        imagegone.setVisibility(View.VISIBLE);
     }
 
 
@@ -134,8 +128,6 @@ int id = 0;
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
                 gonedlayout.setVisibility(View.VISIBLE);
-                TextView textviewdesc = (TextView)findViewById(R.id.descriptionview);
-                textviewdesc.setVisibility(View.VISIBLE);
                 ImageView imagegone = (ImageView) v.findViewById(R.id.more);
                 imagegone.setVisibility(View.GONE);
 
@@ -149,8 +141,6 @@ int id = 0;
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
                 gonedlayout.setVisibility(View.GONE);
-                TextView textviewdesc = (TextView)findViewById(R.id.descriptionview);
-                textviewdesc.setVisibility(View.GONE);
                 ImageView imagegone = (ImageView) v.findViewById(R.id.more);
                 imagegone.setVisibility(View.VISIBLE);
                 openornot = !openornot;

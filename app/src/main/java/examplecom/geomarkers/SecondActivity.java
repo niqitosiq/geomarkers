@@ -1,22 +1,26 @@
 package examplecom.geomarkers;
 
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
+
+        import android.content.ContentValues;
+        import android.content.Intent;
+        import android.database.Cursor;
+        import android.database.sqlite.SQLiteDatabase;
+        import android.graphics.Typeface;
+        import android.support.v7.app.ActionBarActivity;
+        import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.EditText;
+        import android.widget.Switch;
+        import android.widget.TextView;
+        import android.widget.Toast;
+
 
 public class SecondActivity extends AppCompatActivity {
     int id = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +37,11 @@ public class SecondActivity extends AppCompatActivity {
         }
         TextView deletebutton = (TextView)findViewById(R.id.deletebutton);
         deletebutton.setClickable(false);
+
+
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         Cursor cursor = db.query("geomarkers", null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             int columnIdIndex = cursor.getColumnIndex("id");
@@ -58,6 +65,7 @@ public class SecondActivity extends AppCompatActivity {
                     descv.setText(description);
                     switchv.setChecked(signal);
                     deletebutton.setClickable(true);
+
                 }
                 else{
                     db.close();
@@ -66,20 +74,29 @@ public class SecondActivity extends AppCompatActivity {
             cursor.close();
         }
         db.close();
+
+
     }
     public  void delete(View v){
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("geomarkers","id ="+id,null);
         db.close();
-        Log.d("Database", "delete: "+id);
+        Log.d("db", "delete");
         Intent intObj = new Intent(this, MainLayoutActivity.class);
         startActivity(intObj);
+
     }
     public void comeback(View v){
+
         Intent intObj = new Intent(this, MainLayoutActivity.class);
         startActivity(intObj);
+
     }
+
+
+
+
     public void okButton(View v){
         int idintent = getIntent().getIntExtra("id",0);
         if (idintent == 0) {
@@ -101,7 +118,7 @@ public class SecondActivity extends AppCompatActivity {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 db.insert("geomarkers", null, cv);
                 db.close();
-                Log.d("Database", "insert: "+idintent);
+                Log.d("db","insert");
                 Intent intent = new Intent(this, MainLayoutActivity.class);
                 startActivity(intent);
             }
@@ -118,9 +135,14 @@ public class SecondActivity extends AppCompatActivity {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.update("geomarkers", cv, "id = ?", new String[]{Integer.toString(idintent)});
             db.close();
-            Log.d("Database", "update: "+idintent);
+            Log.d("db", "update");
             Intent intent = new Intent(this, MainLayoutActivity.class);
             startActivity(intent);
+
+
+
+
+
         }
     }
 }

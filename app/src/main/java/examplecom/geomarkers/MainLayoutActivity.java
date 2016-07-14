@@ -1,11 +1,9 @@
 package examplecom.geomarkers;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,30 +18,21 @@ import android.widget.TextView;
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
 int id = 0;
     boolean openornot=false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         //db.delete("geomarkers",null,null);            //если присутствуют баги разкоммитить это и запустить один раз (очищает Базу данных)
-
         Integer[] MassIntro = new Integer[]{R.id.TodoList};
         for (Integer i = 0; i < MassIntro.length; i++) {
             TextView lay = (TextView) findViewById(MassIntro[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Intro.otf"));
         }
-
-
         LinearLayout layout = (LinearLayout) findViewById(R.id.others);
         layout.removeAllViewsInLayout();
-
-
         // layout.removeAllViewsInLayout(); ////если присутствуют баги разкоммитить это и запустить один раз
-        //дальше происходят страшные вещи которые я сам не понимаю однако попытался прокоментировать;
-
         //запросы к БД + построение списка
         Cursor cursor = db.query("geomarkers",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
@@ -77,8 +66,6 @@ int id = 0;
         }
         cursor.close();
         dbHelper.close();
-
-
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout addbutton = new LinearLayout(this);
         int gravity = Gravity.CENTER;
@@ -97,18 +84,9 @@ int id = 0;
         plusParams.setMargins(10, 10, 10, 10);
         plusParams.gravity = Gravity.CENTER;
         addplus.addView(imgv, plusParams);
-
-
-
     }
-
-
-
-
     @Override
     public void onClick(View v) {
-
-
     if(v.getId()==R.id.addbutton) {
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
         startActivity(intObj);
@@ -122,20 +100,16 @@ int id = 0;
         v.getParent();
     }
     else{
-        /**/
-
         if(!openornot) {
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
                 gonedlayout.setVisibility(View.VISIBLE);
                 ImageView imagegone = (ImageView) v.findViewById(R.id.more);
                 imagegone.setVisibility(View.GONE);
-
                 openornot = !openornot;
             }catch (Exception e){
                 Log.e("error",e.toString());
             }
-
         }
         else{
             try {

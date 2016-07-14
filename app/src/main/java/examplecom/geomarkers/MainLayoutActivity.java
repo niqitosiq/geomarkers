@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -114,11 +113,11 @@ int id = 0;
         startActivity(intObj);
     }
     else if (v.getId()==R.id.settings) {
-        Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс для редактирования или удаления заметок
-        LinearLayout layoutparent = (LinearLayout)v.getParent().getParent().getParent().getParent().getParent();
+        Intent intObj = new Intent(this, SecondActivity.class);
+        LinearLayout layoutparent = (LinearLayout)v.getParent().getParent().getParent().getParent().getParent().getParent();
         id =  layoutparent.getId();;
         intObj.putExtra("id",id);
-        startActivity(intObj);
+        startActivity(intObj); //стартуем СекондАктивити.класс для редактирования или удаления заметок
         v.getParent();
     }
     else{

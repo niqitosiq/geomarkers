@@ -165,8 +165,9 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="#fff"></FrameLayout>
+                            android:layout_height="match_parent">
+                            <include android:layout="@layout/map_activity" />
+                        </FrameLayout>
 
                     </LinearLayout>
 

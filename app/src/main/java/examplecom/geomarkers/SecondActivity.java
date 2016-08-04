@@ -6,7 +6,6 @@ package examplecom.geomarkers;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
         import android.graphics.Typeface;
-        import android.support.v7.app.ActionBarActivity;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
@@ -15,16 +14,19 @@ package examplecom.geomarkers;
         import android.widget.Switch;
         import android.widget.TextView;
         import android.widget.Toast;
-
+        import com.google.android.gms.maps.*;
 
 public class SecondActivity extends AppCompatActivity {
     int id = 0;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+
+
         Integer[] MassIntro = new Integer[]{R.id.mainText};
         for (Integer i = 0; i < MassIntro.length; i++) {
             TextView lay = (TextView) findViewById(MassIntro[i]);
@@ -94,7 +96,11 @@ public class SecondActivity extends AppCompatActivity {
 
     }
 
-
+    public void openMap(View v){
+        Intent intent = new Intent(this,MapActivity.class);
+        Log.d("activity", "start");
+        startActivity(intent);
+    }
 
 
     public void okButton(View v){
@@ -123,14 +129,14 @@ public class SecondActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-        else{
+        else {
             EditText nametext = (EditText) findViewById(R.id.title_edit);
             EditText descriptiontext = (EditText) findViewById(R.id.description_edit);//обьявляеем поля ввода и свитч
             Switch sw = (Switch) findViewById(R.id.alarm_switch);
             ContentValues cv = new ContentValues();
-            cv.put("name",nametext.getText().toString());
-            cv.put("description",descriptiontext.getText().toString());
-            cv.put("signal",sw.isChecked());
+            cv.put("name", nametext.getText().toString());
+            cv.put("description", descriptiontext.getText().toString());
+            cv.put("signal", sw.isChecked());
             DBHelper dbHelper = new DBHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.update("geomarkers", cv, "id = ?", new String[]{Integer.toString(idintent)});
@@ -140,9 +146,8 @@ public class SecondActivity extends AppCompatActivity {
             startActivity(intent);
 
 
-
-
-
         }
     }
+
+
 }

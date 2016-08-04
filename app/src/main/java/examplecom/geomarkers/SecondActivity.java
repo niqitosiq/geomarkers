@@ -19,7 +19,7 @@ package examplecom.geomarkers;
 public class SecondActivity extends AppCompatActivity {
     int id = 0;
 
-    GoogleMap googleMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,11 @@ public class SecondActivity extends AppCompatActivity {
 
     }
 
-
+    public void openMap(View v){
+        Intent intent = new Intent(this,MapActivity.class);
+        Log.d("activity", "start");
+        startActivity(intent);
+    }
 
 
     public void okButton(View v){

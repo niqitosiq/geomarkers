@@ -153,7 +153,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="5"
-                        android:id="@+id/map">
+                        android:id="@+id/map"
+                        android:onClick="openMap">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -165,8 +166,15 @@
 
                         <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                            <include android:layout="@layout/map_activity" />
+                            android:layout_height="match_parent"
+                            android:id="@+id/maplayoutonsa"
+                            android:onClick="openMap"
+                            android:clickable="true">
+                            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:name="com.google.android.gms.maps.MapFragment"
+                                android:id="@+id/mapsa"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
                         </FrameLayout>
 
                     </LinearLayout>

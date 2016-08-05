@@ -7,9 +7,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 /**
  * Created by DN on 04.08.2016.
  */
@@ -23,7 +23,8 @@ public class MapActivity extends Activity implements OnMapReadyCallback {
                 .findFragmentById(R.id.mapma);
         mapFragment.getMapAsync(this);
 
-    }
+
+}
 
     public void onMapReady(GoogleMap googleMap) {
         LatLng sydney = new LatLng(-34, 151);

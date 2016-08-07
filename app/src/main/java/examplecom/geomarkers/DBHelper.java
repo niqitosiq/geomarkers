@@ -16,7 +16,8 @@ class DBHelper extends SQLiteOpenHelper {                                       
                 + "id integer primary key autoincrement,"
                 + "name text,"                                  //метод создания БД
                 + "description text,"
-                + "geolocation text,"
+                + "latitude double,"
+                + "longitude double,"
                 + "signal integer" + ");");
     }
     @Override

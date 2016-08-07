@@ -6,8 +6,22 @@
     <include layout="@layout/toolbar_activity"
         android:id="@+id/custom_toolbar"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="гдея"
+        android:id="@+id/button"
+        android:onClick="myLocation" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="окей короч"
+        android:id="@+id/button2"
+        android:onClick="sendCoordinates" />
+
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

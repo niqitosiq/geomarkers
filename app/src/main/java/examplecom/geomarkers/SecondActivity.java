@@ -18,14 +18,17 @@ package examplecom.geomarkers;
 
 public class SecondActivity extends AppCompatActivity {
     int id = 0;
-
-
+    double longitude;
+    double latitude;
+    double longitudeFromMap;
+    double latitudeFromMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-
+        longitudeFromMap = getIntent().getDoubleExtra("longitude",0);
+        latitudeFromMap = getIntent().getDoubleExtra("latitude",0);
 
         Integer[] MassIntro = new Integer[]{R.id.mainText};
         for (Integer i = 0; i < MassIntro.length; i++) {
@@ -49,7 +52,8 @@ public class SecondActivity extends AppCompatActivity {
             int columnIdIndex = cursor.getColumnIndex("id");
             int columnNameIndex = cursor.getColumnIndex("name");
             int columnDescriptionIndex = cursor.getColumnIndex("description");
-            int columnGeolocationIndex = cursor.getColumnIndex("geolocation");
+            int columnLatitudeIndex = cursor.getColumnIndex("latitude");
+            int columnLongitudeIndex = cursor.getColumnIndex("longitude");
             int columnSignalIndex = cursor.getColumnIndex("signal");
             int idintent = getIntent().getIntExtra("id", 0);
             do {
@@ -58,6 +62,8 @@ public class SecondActivity extends AppCompatActivity {
                     String name = cursor.getString(columnNameIndex);
                     String description = cursor.getString(columnDescriptionIndex);
                     int signalint = cursor.getInt(columnSignalIndex);
+                    latitude = cursor.getDouble(columnLatitudeIndex);
+                    longitude = cursor.getDouble(columnLongitudeIndex);
                     boolean signal = false;
                     if(signalint==1){signal = true;}
                     TextView namev = (TextView)findViewById(R.id.title_edit);
@@ -80,11 +86,12 @@ public class SecondActivity extends AppCompatActivity {
 
     }
     public  void delete(View v){
+        int idintent = getIntent().getIntExtra("id",0);
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.delete("geomarkers","id ="+id,null);
+        db.delete("geomarkers","id ="+idintent,null);
         db.close();
-        Log.d("db", "delete");
+        Log.d("db", "delete"+idintent);
         Intent intObj = new Intent(this, MainLayoutActivity.class);
         startActivity(intObj);
 
@@ -98,7 +105,10 @@ public class SecondActivity extends AppCompatActivity {
 
     public void openMap(View v){
         Intent intent = new Intent(this,MapActivity.class);
-        Log.d("activity", "start");
+        intent.putExtra("latitude",latitude);
+        intent.putExtra("longitude",longitude);
+        int idintent = getIntent().getIntExtra("id", 0);
+        intent.putExtra("id",idintent);
         startActivity(intent);
     }
 
@@ -116,9 +126,12 @@ public class SecondActivity extends AppCompatActivity {
                         "Заполните первое поле", Toast.LENGTH_SHORT);
                 toast.show();
             } else {
+
                 cv.put("name",nametext.getText().toString());
                 //подготавливаем данные к отправке
                 cv.put("description", descriptiontext.getText().toString());
+                cv.put("latitude",latitudeFromMap);
+                cv.put("longitude",longitudeFromMap);
                 cv.put("signal", sw.isChecked());
                 DBHelper dbHelper = new DBHelper(this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -136,12 +149,14 @@ public class SecondActivity extends AppCompatActivity {
             ContentValues cv = new ContentValues();
             cv.put("name", nametext.getText().toString());
             cv.put("description", descriptiontext.getText().toString());
+            cv.put("latitude",latitudeFromMap);
+            cv.put("longitude",longitudeFromMap);
             cv.put("signal", sw.isChecked());
             DBHelper dbHelper = new DBHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             db.update("geomarkers", cv, "id = ?", new String[]{Integer.toString(idintent)});
             db.close();
-            Log.d("db", "update");
+            Log.d("db", "update"+idintent);
             Intent intent = new Intent(this, MainLayoutActivity.class);
             startActivity(intent);
 

@@ -177,13 +177,12 @@
                                 android:orientation="horizontal"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:background="#65eaeaea">
+                                android:background="#00ffffff">
 
                                 <ImageView
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:id="@+id/imageView"
-                                    android:src="@drawable/settingsmap"
                                     android:clickable="true"
                                     android:onClick="openMap"
                                     android:baselineAlignBottom="false"
@@ -257,12 +256,24 @@
                         <ImageView
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
+                            android:id="@+id/deletebutton"
+                            android:src="@drawable/trash"
+                            android:onClick="delete"
+                            android:clickable="true"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
                             android:id="@+id/imageView7"
                             android:layout_weight="1"
                             android:clickable="false"
                             android:src="@drawable/more1"
                             android:layout_marginRight="15dp"
-                            android:layout_marginLeft="15dp" />
+                            android:layout_marginLeft="15dp"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -277,15 +288,6 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="delete"
-                                android:id="@+id/deletebutton"
-                                android:gravity="center"
-                                android:onClick="delete"
-                                android:enabled="true"
-                                android:clickable="false" />
                         </FrameLayout>
 
                         <ImageView
@@ -293,7 +295,6 @@
                             android:layout_height="fill_parent"
                             android:id="@+id/imageView8"
                             android:src="@drawable/checkbox"
-                            android:layout_margin="8dp"
                             android:foregroundGravity="right"
                             android:layout_weight="2"
                             android:onClick="okButton" />

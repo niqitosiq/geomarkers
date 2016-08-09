@@ -12,6 +12,7 @@ package examplecom.geomarkers;
         import android.view.View;
         import android.widget.EditText;
         import android.widget.FrameLayout;
+        import android.widget.ImageView;
         import android.widget.Switch;
         import android.widget.TextView;
         import android.widget.Toast;
@@ -41,7 +42,7 @@ public class SecondActivity extends AppCompatActivity {
             TextView lay = (TextView) findViewById(MassRoboto[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
         }
-        TextView deletebutton = (TextView)findViewById(R.id.deletebutton);
+        ImageView deletebutton = (ImageView)findViewById(R.id.deletebutton);
         deletebutton.setClickable(false);
 
 

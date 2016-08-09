@@ -34,7 +34,8 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="6">
+                    android:layout_weight="6"
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="fill_parent"
@@ -43,7 +44,8 @@
                         android:src="@drawable/back"
                         android:layout_margin="7dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" />
+                        android:layout_marginRight="5dp"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -89,7 +91,8 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="6">
+                    android:layout_weight="6"
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="fill_parent"
@@ -98,7 +101,8 @@
                         android:src="@drawable/next"
                         android:layout_margin="7dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" />
+                        android:layout_marginRight="5dp"
+                        android:visibility="invisible" />
                 </LinearLayout>
 
             </LinearLayout>

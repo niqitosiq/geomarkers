@@ -11,6 +11,7 @@ package examplecom.geomarkers;
         import android.util.Log;
         import android.view.View;
         import android.widget.EditText;
+        import android.widget.FrameLayout;
         import android.widget.Switch;
         import android.widget.TextView;
         import android.widget.Toast;
@@ -83,7 +84,6 @@ public class SecondActivity extends AppCompatActivity {
         }
         db.close();
 
-
     }
     public  void delete(View v){
         int idintent = getIntent().getIntExtra("id",0);
@@ -102,7 +102,6 @@ public class SecondActivity extends AppCompatActivity {
         startActivity(intObj);
 
     }
-
     public void openMap(View v){
         Intent intent = new Intent(this,MapActivity.class);
         intent.putExtra("latitude",latitude);

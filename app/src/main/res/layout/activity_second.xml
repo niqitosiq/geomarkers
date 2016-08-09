@@ -153,8 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="5"
-                        android:id="@+id/map"
-                        android:onClick="openMap">
+                        android:id="@+id/map">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -164,18 +163,36 @@
                             android:textColor="#fff"
                             android:layout_margin="5dp" />
 
-                        <FrameLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/maplayoutonsa"
-                            android:onClick="openMap"
-                            android:clickable="true">
+                            android:id="@+id/maplayoutonsa">
                             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                                 android:name="com.google.android.gms.maps.MapFragment"
                                 android:id="@+id/mapsa"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
-                        </FrameLayout>
+                                android:layout_height="match_parent" />
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:background="#65eaeaea">
+
+                                <ImageView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:id="@+id/imageView"
+                                    android:src="@drawable/settingsmap"
+                                    android:clickable="true"
+                                    android:onClick="openMap"
+                                    android:baselineAlignBottom="false"
+                                    android:foregroundGravity="center"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp" />
+                            </LinearLayout>
+
+                        </RelativeLayout>
 
                     </LinearLayout>
 

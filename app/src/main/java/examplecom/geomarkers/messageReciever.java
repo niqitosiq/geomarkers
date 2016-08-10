@@ -11,6 +11,6 @@ public class messageReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-       // context.startService(new Intent(context, dome.class));
+       context.startService(new Intent(context, dome.class));
     }
 }

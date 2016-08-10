@@ -26,7 +26,7 @@ int id = 0;
         setContentView(R.layout.main_layout);
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        startService(new Intent(this, dome.class));
+
 
         //db.delete("geomarkers",null,null);            //если присутствуют баги разкоммитить это и запустить один раз (очищает Базу данных)
 

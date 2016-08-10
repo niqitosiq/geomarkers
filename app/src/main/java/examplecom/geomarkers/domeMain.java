@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-class domeMain extends Activity implements Runnable {
+public class domeMain extends Activity  {
     private LocationManager locationManager;
     Context mContext;
     double[] latitudes;

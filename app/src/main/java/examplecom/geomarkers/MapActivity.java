@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.support.v4.content.PermissionChecker;
+
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -76,30 +78,19 @@ public class MapActivity extends Activity implements OnMapReadyCallback{
         final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         boolean mIsGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean mIsNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        boolean mIsGeoDisabled = !mIsGPSEnabled && !mIsNetworkEnabled;
-
-        if(mIsGeoDisabled==true){
-            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-        }else{
-
-        int i = 0;
-        while (location==null){
-            if(i == 5){
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Превышено кол-во запросов", Toast.LENGTH_SHORT);
-                toast.show();
-                break;
-            }
+        if(mIsGPSEnabled){
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            i++;
+        }if(mIsNetworkEnabled) {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
 
         if(location!=null) {
             LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
             map.addMarker(new MarkerOptions().position(myLocation).title("it's my location!"));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 19));
         }
         }
-    }
+
 
 
 

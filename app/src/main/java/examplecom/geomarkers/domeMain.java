@@ -14,9 +14,12 @@ import android.util.Log;
 
 public class domeMain extends Activity implements Runnable {
     private LocationManager locationManager;
-    Context mContext;
-    double[] latitudes;
-    double[] longitudes;
+    private Context mContext;
+    private double[] latitudes;
+    private double[] longitudes;
+    int[] signal;
+    private double radiusDome;
+
 
 
     public domeMain(Context mContext) {
@@ -35,9 +38,11 @@ public class domeMain extends Activity implements Runnable {
         if (cursor.moveToFirst()){
             int columnLatitudeIndex = cursor.getColumnIndex("latitude");
             int columnLongitudeIndex = cursor.getColumnIndex("longitude");
+            int columnSignalIndex = cursor.getColumnIndex("signal");
             do {
                 latitudes[i]= cursor.getDouble(columnLatitudeIndex);
                 longitudes[i]= cursor.getDouble(columnLongitudeIndex);
+                signal[i]= cursor.getInt(columnSignalIndex);
                 i++;
             }while (cursor.moveToNext());
 
@@ -58,11 +63,13 @@ public class domeMain extends Activity implements Runnable {
         if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     1000 * 10, 10, locationListener);
+            radiusDome = 0.001000;
         }
         if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
                     locationListener);
+            radiusDome = 0.001800;
         }
     }
 
@@ -110,7 +117,8 @@ public class domeMain extends Activity implements Runnable {
 
     };
     private void domeMaths(Location geolocation){
-        double radiusDome = 0.000600;
+
+        worker();
 
         if(latitudes.length!=longitudes.length){
             latitudes=null;
@@ -119,10 +127,10 @@ public class domeMain extends Activity implements Runnable {
         }
         if (geolocation!=null){
             for (int i = 0; i < latitudes.length; i++) {
-                double positiveLatitudeLimit = geolocation.getLatitude()+radiusDome;
-                double negativeLatitudeLimit =geolocation.getLatitude()-radiusDome;
-                double positiveLongitudeLimit =geolocation.getLongitude()+radiusDome;
-                double negativeLongitudeLimit =geolocation.getLongitude()+radiusDome;
+                double positiveLatitudeLimit = latitudes[i]+radiusDome;
+                double negativeLatitudeLimit =latitudes[i]-radiusDome;
+                double positiveLongitudeLimit =longitudes[i]+radiusDome;
+                double negativeLongitudeLimit =longitudes[i]-radiusDome;
                 if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
                     if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
 
@@ -131,10 +139,7 @@ public class domeMain extends Activity implements Runnable {
 
 
                     }
-
                 }
-
-
             }
         }
     }

@@ -123,21 +123,25 @@ public class domeMain extends Activity implements Runnable {
         if(latitudes.length!=longitudes.length){
             latitudes=null;
             longitudes=null;
+            signal=null;
             worker();
         }
         if (geolocation!=null){
             for (int i = 0; i < latitudes.length; i++) {
-                double positiveLatitudeLimit = latitudes[i]+radiusDome;
-                double negativeLatitudeLimit =latitudes[i]-radiusDome;
-                double positiveLongitudeLimit =longitudes[i]+radiusDome;
-                double negativeLongitudeLimit =longitudes[i]-radiusDome;
-                if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
-                    if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
+                if(signal[i]==1){
+                    double positiveLatitudeLimit = latitudes[i]+radiusDome;
+                    double negativeLatitudeLimit =latitudes[i]-radiusDome;
+                    double positiveLongitudeLimit =longitudes[i]+radiusDome;
+                    double negativeLongitudeLimit =longitudes[i]-radiusDome;
+                    if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
+                        if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
 
 
-                        //вот тут должно быть оповещение
+                            MainLayoutActivity notice = new MainLayoutActivity();
+                            notice.clic(longitudes[i],latitudes[i]);
 
 
+                        }
                     }
                 }
             }

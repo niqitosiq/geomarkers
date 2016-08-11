@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-public class domeMain extends Activity  {
+public class domeMain extends Activity implements Runnable {
     private LocationManager locationManager;
     Context mContext;
     double[] latitudes;
@@ -24,6 +24,7 @@ public class domeMain extends Activity  {
     }
     public void run() {
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        worker();
 
     }
     protected  void worker(){
@@ -94,7 +95,7 @@ public class domeMain extends Activity  {
 
         @Override
         public void onProviderEnabled(String provider) {
-            onResume();
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
                 ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);

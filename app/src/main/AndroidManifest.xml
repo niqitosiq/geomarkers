@@ -43,6 +43,11 @@
             android:name=".dome"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".notice"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":notifaction"></service>
     </application>
 
 </manifest>

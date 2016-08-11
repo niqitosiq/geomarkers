@@ -104,6 +104,12 @@ int id = 0;
 
 
 
+    public void clic(double longti, double latiti){
+        notice alarm = new notice();
+        alarm.notice(this, longti, latiti);
+    };
+
+
 
     @Override
     public void onClick(View v) {

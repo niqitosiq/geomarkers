@@ -126,11 +126,12 @@ public class domeMain extends Activity implements Runnable {
                 if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
                     if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
 
-
-                        //вот тут должно быть оповещение
+                        MainLayoutActivity notice = new MainLayoutActivity();
+                        notice.clic(сюда передавай два дабл параметра лонг и лати);
 
 
                     }
+                }
 
                 }
 

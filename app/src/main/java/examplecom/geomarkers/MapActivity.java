@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -73,23 +74,17 @@ public class MapActivity extends Activity implements OnMapReadyCallback{
     }
 
     public void myLocation(View v){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
-            checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        boolean mIsGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean mIsNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if(mIsGPSEnabled){
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }if(mIsNetworkEnabled) {
-            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
+        map.clear();
+        domeMain object = new domeMain(this,"asNotService");
+        LatLng myCoords = object.doIfStartAsNotService();
 
-        if(location!=null) {
-            LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-            map.addMarker(new MarkerOptions().position(myLocation).title("it's my location!"));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 19));
+        if(myCoords!=null) {
+            map.addMarker(new MarkerOptions().position(myCoords).title("it's my location!"));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(myCoords, 19));
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Неизвестная ошибка:смотрите логи{TAG:Error:}", Toast.LENGTH_SHORT);
+            toast.show();
         }
         }
 

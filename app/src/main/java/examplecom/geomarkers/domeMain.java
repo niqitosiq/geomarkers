@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import com.google.android.gms.maps.model.LatLng;
 
 public class domeMain extends Activity implements Runnable {
     private LocationManager locationManager;
@@ -22,14 +23,66 @@ public class domeMain extends Activity implements Runnable {
 
 
 
-    public domeMain(Context mContext) {
-        this.mContext = mContext;
-    }
-    public void run() {
-        locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        worker();
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try{
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
+                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            locationManager.removeUpdates(locationListener);
+        }catch (Exception e){
+            Log.d("Unexpected_Error",e.toString());}
 
     }
+    public domeMain(Context mContext,String runAs) {
+        this.mContext = mContext;
+        if (runAs=="Service"){
+            run();}
+
+    }
+    public void run() {
+        terminateListener();
+        setListners();
+    }
+
+    public LatLng doIfStartAsNotService() {
+        String provider = null;
+        terminateListener();
+        setListners();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
+            ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+
+    int i =0;
+        while(true){
+            if(i==100){
+                break;
+            }
+            if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)!=null){
+                provider = LocationManager.GPS_PROVIDER;
+                break;
+            }
+            if(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!=null){
+                provider = LocationManager.NETWORK_PROVIDER;
+                break;
+            }
+            try {
+                Thread.sleep(50);
+            }catch (Exception e){Log.e("Error:",e.toString());}
+            i++;
+        }
+        try {
+            LatLng myCoords = new LatLng(locationManager.getLastKnownLocation(provider).getLatitude(), locationManager.getLastKnownLocation(provider).getLongitude());
+            terminateListener();
+            return myCoords;
+        }catch (Exception e){Log.e("Error:",e.toString());}
+        terminateListener();
+        return null;
+        }
     protected  void worker(){
         int i = 0;
         DBHelper dbHelper = new DBHelper(mContext);
@@ -51,43 +104,28 @@ public class domeMain extends Activity implements Runnable {
         db.close();
         dbHelper.close();
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
 
+    protected void setListners() {
+
+        locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
             ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
         }
 
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)==true) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     1000 * 10, 10, locationListener);
             radiusDome = 0.001000;
         }
-        if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)==true) {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
                     locationListener);
             radiusDome = 0.001800;
         }
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        try{
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
-                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
-            }
-            locationManager.removeUpdates(locationListener);
-        }catch (Exception e){
-            Log.d("Unexpected_Error",e.toString());}
-
-    }
-    private LocationListener locationListener = new LocationListener() {
+    LocationListener locationListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(Location location) {
@@ -97,12 +135,14 @@ public class domeMain extends Activity implements Runnable {
 
         @Override
         public void onProviderDisabled(String provider) {
-            onResume();
+            terminateListener();
+            setListners();
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-
+            terminateListener();
+            setListners();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
                 ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
@@ -116,6 +156,22 @@ public class domeMain extends Activity implements Runnable {
         }
 
     };
+
+    protected void terminateListener() {
+
+        try{
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
+                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            locationManager.removeUpdates(locationListener);
+        }catch (Exception e){
+            Log.d("Unexpected_Error",e.toString());}
+
+    }
+
+
     private void domeMaths(Location geolocation){
 
         worker();

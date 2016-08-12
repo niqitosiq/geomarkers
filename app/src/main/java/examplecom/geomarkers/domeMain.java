@@ -11,32 +11,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class domeMain extends Activity implements Runnable {
     private LocationManager locationManager;
     private Context mContext;
-    private double[] latitudes;
-    private double[] longitudes;
-    int[] signal;
+    private double[] latitudes = new double[63];
+    private double[] longitudes= new double[63];
+    int[] signal = new int[63];
     private double radiusDome;
 
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        try{
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
-                ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
-            }
-            locationManager.removeUpdates(locationListener);
-        }catch (Exception e){
-            Log.d("Unexpected_Error",e.toString());}
-
-    }
     public domeMain(Context mContext,String runAs) {
         this.mContext = mContext;
         if (runAs=="Service"){
@@ -170,7 +158,10 @@ public class domeMain extends Activity implements Runnable {
             Log.d("Unexpected_Error",e.toString());}
 
     }
+public void doSomething(){
 
+
+}
 
     private void domeMaths(Location geolocation){
 
@@ -192,9 +183,10 @@ public class domeMain extends Activity implements Runnable {
                     if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
                         if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
 
-
-                            MainLayoutActivity notice = new MainLayoutActivity();
-                            notice.clic(longitudes[i],latitudes[i]);
+                            notice alarm = new notice();
+                            alarm.notice(mContext, longitudes[i], latitudes[i]);
+                            //MainLayoutActivity notice = new MainLayoutActivity();
+                            //notice.clic(longitudes[i],latitudes[i]);
 
 
                         }

@@ -37,8 +37,7 @@ public class dome extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        domeMain mr = new domeMain(this,"Service");
-        es.execute(mr);
+        domeMain serviceDome = new domeMain(this,"Service");
         return super.onStartCommand(intent, flags, startId);
     }
     @Override

@@ -17,9 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
-int id = 0;
-    boolean openornot=false;
-
+    int id = 0;
+    boolean[] openOrNot = new boolean[128];
+    int[] ids=new int[128];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +27,7 @@ int id = 0;
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         //this.startService(new Intent(this,dome.class));
-
+        for(int i = 0; i<openOrNot.length;i++){openOrNot[i]=false;}
 
         //db.delete("geomarkers",null,null);            //если присутствуют баги разкоммитить это и запустить один раз (очищает Базу данных)
 
@@ -51,6 +51,7 @@ int id = 0;
             int columnIdIndex = cursor.getColumnIndex("id");
             int columnNameIndex = cursor.getColumnIndex("name");
             int columnDescIndex = cursor.getColumnIndex("description");
+            int j =0;
             do{
                 int id = cursor.getInt(columnIdIndex);
                 String name = cursor.getString(columnNameIndex);
@@ -63,6 +64,7 @@ int id = 0;
                 TextView desc = (TextView) custom_layout.findViewById(R.id.descriptionview);
                 desc.setText(description);
                 custom_layout.setId(id);
+                ids[j]=id;
                 textmarker.setText(name);
                 custom_layout.setOnClickListener(this);
                 layout.addView(custom_layout);
@@ -70,7 +72,9 @@ int id = 0;
                 for (Integer i = 0; i < MassRoboto.length; i++) {
                     TextView lay = (TextView) custom_layout.findViewById(MassRoboto[i]);
                     lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
+
                 }
+                j++;
             }while(cursor.moveToNext());
         }
         else{
@@ -130,31 +134,42 @@ int id = 0;
     }
     else{
         /**/
-
-        if(!openornot) {
+        int numberOfBooleanMassive = 0;
+        int idOfParent = v.getId();
+        Log.e("TagTagTag",Integer.toString(idOfParent));
+        for(int i =0;i<ids.length;i++){
+            if(idOfParent==ids[i]){
+                numberOfBooleanMassive = i;
+                Log.e("TagTagTag",Integer.toString(ids[i]));
+                break;
+            }
+        }
+        Log.e("TagTagTag",Integer.toString(numberOfBooleanMassive)+"/"+openOrNot[numberOfBooleanMassive]);
+        if(openOrNot[numberOfBooleanMassive]) {
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
-                gonedlayout.setVisibility(View.VISIBLE);
+                gonedlayout.setVisibility(View.GONE);
                 ImageView imagegone = (ImageView) v.findViewById(R.id.more);
-                imagegone.setVisibility(View.GONE);
-
-                openornot = !openornot;
+                imagegone.setVisibility(View.VISIBLE);
+                openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
             }catch (Exception e){
                 Log.e("error",e.toString());
             }
 
         }
         else{
+
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
-                gonedlayout.setVisibility(View.GONE);
+                gonedlayout.setVisibility(View.VISIBLE);
                 ImageView imagegone = (ImageView) v.findViewById(R.id.more);
-                imagegone.setVisibility(View.VISIBLE);
-                openornot = !openornot;
+                imagegone.setVisibility(View.GONE);
+
+                openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
             }catch (Exception e){
                 Log.e("error",e.toString());
             }
-            }
+        }
     }
     }
 }

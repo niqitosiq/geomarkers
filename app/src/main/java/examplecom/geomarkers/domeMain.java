@@ -18,9 +18,9 @@ import com.google.android.gms.maps.model.LatLng;
 public class domeMain extends Activity implements Runnable {
     private LocationManager locationManager;
     private Context mContext;
-    private double[] latitudes = new double[63];
-    private double[] longitudes= new double[63];
-    int[] signal = new int[63];
+    private double[] latitudes = new double[64];
+    private double[] longitudes= new double[64];
+    int[] signal = new int[64];
     private double radiusDome;
 
 

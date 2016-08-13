@@ -98,6 +98,9 @@ public class MapActivity extends Activity implements OnMapReadyCallback{
     public void sendCoordinates(View v){
         if(coordinates!=null) {
             Intent intent = new Intent(this, SecondActivity.class);
+            intent.putExtra("nameField",getIntent().getStringExtra("name"));
+            intent.putExtra("descField",getIntent().getStringExtra("description"));
+            intent.putExtra("switchPos",getIntent().getBooleanExtra("signalOrNot",false));
             intent.putExtra("latitude", coordinates.latitude);
             intent.putExtra("longitude", coordinates.longitude);
             int id = getIntent().getIntExtra("id", 0);

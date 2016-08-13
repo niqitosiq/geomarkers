@@ -31,6 +31,15 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         longitudeFromMap = getIntent().getDoubleExtra("longitude",0);
         latitudeFromMap = getIntent().getDoubleExtra("latitude",0);
+        EditText nameField = (EditText)findViewById(R.id.title_edit);
+        EditText descField = (EditText)findViewById(R.id.description_edit);
+        Switch signalOrNot = (Switch)findViewById(R.id.alarm_switch);
+        String textNameField = getIntent().getStringExtra("nameField");
+        String textDescField = getIntent().getStringExtra("descField");
+        boolean switchPos = getIntent().getBooleanExtra("signalOrNot",false);
+        nameField.setText(textNameField);
+        descField.setText(textDescField);
+        signalOrNot.setChecked(switchPos);
 
         Integer[] MassIntro = new Integer[]{R.id.mainText};
         for (Integer i = 0; i < MassIntro.length; i++) {
@@ -107,6 +116,15 @@ public class SecondActivity extends AppCompatActivity {
         Intent intent = new Intent(this,MapActivity.class);
         intent.putExtra("latitude",latitude);
         intent.putExtra("longitude",longitude);
+        EditText nameField = (EditText)findViewById(R.id.title_edit);
+        EditText descField = (EditText)findViewById(R.id.description_edit);
+        Switch signalOrNot = (Switch)findViewById(R.id.alarm_switch);
+        String nameString = nameField.getText().toString();
+        String descString = descField.getText().toString();
+        boolean switchPosition = signalOrNot.isActivated();
+        intent.putExtra("name",nameString);
+        intent.putExtra("description",descString);
+        intent.putExtra("signalOrNot",switchPosition);
         int idintent = getIntent().getIntExtra("id", 0);
         intent.putExtra("id",idintent);
         startActivity(intent);

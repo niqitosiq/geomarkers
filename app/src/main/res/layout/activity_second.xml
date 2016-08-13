@@ -145,7 +145,8 @@
                             android:layout_margin="5dp"
                             android:inputType="text"
                             android:editable="false"
-                            android:maxLength="256" />
+                            android:maxLength="256"
+                            android:textColor="#fff" />
                     </LinearLayout>
 
                     <LinearLayout

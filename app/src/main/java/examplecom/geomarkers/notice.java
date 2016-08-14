@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -22,8 +23,9 @@ import java.util.concurrent.TimeUnit;
 public class notice {
 
     int NOTIFY_ID = 10;
+    long mills = 1000L;
 
-    public void notice(Context context, double longti, double latiti) {
+    public void notice(Context context, String name) {
 
 
         Notification.Builder builder = new Notification.Builder(context);
@@ -35,11 +37,13 @@ public class notice {
         builder.setContentIntent(contentIntent)
                 .setSmallIcon(R.drawable.add)
                 .setContentTitle("Вы находитесь близко к метке")
-                .setContentText("Метка на координатах: "+ longti + latiti); // Текст уведомления
+                .setContentText("\""+ name+"\""); // Текст уведомления
 
         Notification notification = builder.build();
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(NOTIFY_ID, notification);
+        Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
+        vibrator.vibrate(mills);
     }
 }

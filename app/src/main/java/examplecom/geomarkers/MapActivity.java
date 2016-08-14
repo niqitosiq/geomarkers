@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -36,7 +37,6 @@ import com.google.android.gms.vision.barcode.Barcode;
  * Created by DN on 04.08.2016.
  */
 public class MapActivity extends Activity implements OnMapReadyCallback{
-    Location location;
     GoogleMap map;
     private LatLng coordinates;
     double latitude;
@@ -64,7 +64,7 @@ public class MapActivity extends Activity implements OnMapReadyCallback{
             public void onMapLongClick(LatLng latLng) {
                     googleMap.clear();
                     googleMap.addMarker(new MarkerOptions().position(latLng));
-                    googleMap.addCircle(new CircleOptions().center(latLng).radius(30).fillColor(0xffff00ff).strokeColor(0xffff0000));
+                    googleMap.addCircle(new CircleOptions().center(latLng).radius(80).strokeColor(Color.argb(255,0,255,0)).fillColor(Color.argb(50,0,255,0)));
                     coordinates = latLng;
             }
         });

@@ -26,25 +26,15 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.main_layout);
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        //this.startService(new Intent(this,dome.class));
         for(int i = 0; i<openOrNot.length;i++){openOrNot[i]=false;}
-
         //db.delete("geomarkers",null,null);            //если присутствуют баги разкоммитить это и запустить один раз (очищает Базу данных)
-
         Integer[] MassIntro = new Integer[]{R.id.TodoList};
         for (Integer i = 0; i < MassIntro.length; i++) {
             TextView lay = (TextView) findViewById(MassIntro[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Intro.otf"));
         }
-
-
         LinearLayout layout = (LinearLayout) findViewById(R.id.others);
         layout.removeAllViewsInLayout();
-
-
-        // layout.removeAllViewsInLayout(); ////если присутствуют баги разкоммитить это и запустить один раз
-        //дальше происходят страшные вещи которые я сам не понимаю однако попытался прокоментировать;
-
         //запросы к БД + построение списка
         Cursor cursor = db.query("geomarkers",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
@@ -72,18 +62,14 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 for (Integer i = 0; i < MassRoboto.length; i++) {
                     TextView lay = (TextView) custom_layout.findViewById(MassRoboto[i]);
                     lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
-
                 }
                 j++;
             }while(cursor.moveToNext());
         }
         else{
-            //нихера не делать
         }
         cursor.close();
         dbHelper.close();
-
-
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout addbutton = new LinearLayout(this);
         int gravity = Gravity.CENTER;
@@ -102,24 +88,9 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         plusParams.setMargins(10, 10, 10, 10);
         plusParams.gravity = Gravity.CENTER;
         addplus.addView(imgv, plusParams);
-
-
-
     }
-
-
-
-    public void clic(double longti, double latiti){
-        notice alarm = new notice();
-        alarm.notice(this, longti, latiti);
-    };
-
-
-
     @Override
     public void onClick(View v) {
-
-
     if(v.getId()==R.id.addbutton) {
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
         startActivity(intObj);
@@ -133,7 +104,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         v.getParent();
     }
     else{
-        /**/
         int numberOfBooleanMassive = 0;
         int idOfParent = v.getId();
         Log.e("TagTagTag",Integer.toString(idOfParent));
@@ -155,16 +125,13 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             }catch (Exception e){
                 Log.e("error",e.toString());
             }
-
         }
         else{
-
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
                 gonedlayout.setVisibility(View.VISIBLE);
                 ImageView imagegone = (ImageView) v.findViewById(R.id.more);
                 imagegone.setVisibility(View.GONE);
-
                 openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
             }catch (Exception e){
                 Log.e("error",e.toString());
@@ -173,14 +140,3 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
     }
     }
 }
-
-
-
-
-
-
-
-
-
-
-

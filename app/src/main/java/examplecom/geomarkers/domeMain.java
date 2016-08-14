@@ -11,31 +11,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
-
 import com.google.android.gms.maps.model.LatLng;
-
 public class domeMain extends Activity implements Runnable {
     private LocationManager locationManager;
     private Context mContext;
-    private double[] latitudes = new double[64];
-    private double[] longitudes= new double[64];
-    int[] signal = new int[64];
+    private double[] latitudes = new double[128];
+    private double[] longitudes= new double[128];
+    private String[] name= new String[128];
+    int[] signal = new int[128];
     private double radiusDome;
-
-
-
     public domeMain(Context mContext,String runAs) {
         this.mContext = mContext;
         if (runAs=="Service"){
             run();}
-
     }
     public void run() {
         terminateListener();
         setListners();
     }
-
     public LatLng doIfStartAsNotService() {
         String provider = null;
         terminateListener();
@@ -44,7 +37,6 @@ public class domeMain extends Activity implements Runnable {
             ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
             ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
         }
-
     int i =0;
         while(true){
             if(i==100){
@@ -80,27 +72,25 @@ public class domeMain extends Activity implements Runnable {
             int columnLatitudeIndex = cursor.getColumnIndex("latitude");
             int columnLongitudeIndex = cursor.getColumnIndex("longitude");
             int columnSignalIndex = cursor.getColumnIndex("signal");
+            int columnNameIndex = cursor.getColumnIndex("name");
             do {
                 latitudes[i]= cursor.getDouble(columnLatitudeIndex);
                 longitudes[i]= cursor.getDouble(columnLongitudeIndex);
                 signal[i]= cursor.getInt(columnSignalIndex);
+                name[i]= cursor.getString(columnNameIndex);
                 i++;
             }while (cursor.moveToNext());
-
         }
         cursor.close();
         db.close();
         dbHelper.close();
     }
-
     protected void setListners() {
-
         locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
             ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
         }
-
         if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)==true) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     1000 * 10, 10, locationListener);
@@ -114,19 +104,15 @@ public class domeMain extends Activity implements Runnable {
         }
     }
     LocationListener locationListener = new LocationListener() {
-
         @Override
         public void onLocationChanged(Location location) {
-
             domeMaths(location);
         }
-
         @Override
         public void onProviderDisabled(String provider) {
             terminateListener();
             setListners();
         }
-
         @Override
         public void onProviderEnabled(String provider) {
             terminateListener();
@@ -137,18 +123,12 @@ public class domeMain extends Activity implements Runnable {
             }
             domeMaths(locationManager.getLastKnownLocation(provider));
         }
-
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
         }
-
     };
-
     protected void terminateListener() {
-
         try{
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_COARSE_LOCATION);
                 ContextCompat.checkSelfPermission(mContext,android.Manifest.permission.ACCESS_FINE_LOCATION);
@@ -156,17 +136,9 @@ public class domeMain extends Activity implements Runnable {
             locationManager.removeUpdates(locationListener);
         }catch (Exception e){
             Log.d("Unexpected_Error",e.toString());}
-
     }
-public void doSomething(){
-
-
-}
-
     private void domeMaths(Location geolocation){
-
         worker();
-
         if(latitudes.length!=longitudes.length){
             latitudes=null;
             longitudes=null;
@@ -182,13 +154,8 @@ public void doSomething(){
                     double negativeLongitudeLimit =longitudes[i]-radiusDome;
                     if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
                         if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
-
                             notice alarm = new notice();
-                            alarm.notice(mContext, longitudes[i], latitudes[i]);
-                            //MainLayoutActivity notice = new MainLayoutActivity();
-                            //notice.clic(longitudes[i],latitudes[i]);
-
-
+                            alarm.notice(mContext, name[i]);
                         }
                     }
                 }

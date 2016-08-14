@@ -189,7 +189,7 @@
                             android:layout_margin="5dp"
                             android:textColor="#fff"
                             android:inputType="text"
-                            android:maxLength="64" />
+                            android:maxLength="128" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -214,7 +214,7 @@
                             android:layout_margin="5dp"
                             android:inputType="text"
                             android:editable="false"
-                            android:maxLength="256"
+                            android:maxLength="512"
                             android:textColor="#fff" />
                     </LinearLayout>
 

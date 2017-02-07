@@ -120,10 +120,8 @@ int id = 0;
                 gonelay(scrollY, screen, lenght, childs, heightoneelem, parent);
             }
         });
-
-
     }
-    int schetchik = 0;
+
     public void gonelay(int scroll, int screen, int length, int childs, int heightoneelem, LinearLayout parent){
         Animation anim = null;
         int onscreen = Math.round((screen*childs)/length); // количество одновременно показаных эл-тов на экране.
@@ -131,8 +129,6 @@ int id = 0;
         for(int i=0; i<childs; i++){
             final View child = parent.getChildAt(i);
             child.setVisibility(View.INVISIBLE);
-
-
         }
         for(int i=currentpos+1; i<currentpos+onscreen; i++){
             final View vision = parent.getChildAt(i);

@@ -4,6 +4,7 @@ package examplecom.geomarkers;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,38 +16,50 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import static android.R.attr.animation;
+
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
-    int id = 0;
-    boolean[] openOrNot = new boolean[128];
-    int[] ids=new int[128];
+int id = 0;
+    boolean openornot=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        for(int i = 0; i<openOrNot.length;i++){openOrNot[i]=false;}
+        //this.startService(new Intent(this,dome.class));
+
+
         //db.delete("geomarkers",null,null);            //если присутствуют баги разкоммитить это и запустить один раз (очищает Базу данных)
+
         Integer[] MassIntro = new Integer[]{R.id.TodoList};
         for (Integer i = 0; i < MassIntro.length; i++) {
             TextView lay = (TextView) findViewById(MassIntro[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Intro.otf"));
         }
+
+
         LinearLayout layout = (LinearLayout) findViewById(R.id.others);
         layout.removeAllViewsInLayout();
+
+
+        // layout.removeAllViewsInLayout(); ////если присутствуют баги разкоммитить это и запустить один раз
+        //дальше происходят страшные вещи которые я сам не понимаю однако попытался прокоментировать;
+
         //запросы к БД + построение списка
         Cursor cursor = db.query("geomarkers",null,null,null,null,null,null);
         if(cursor.moveToFirst()){
             int columnIdIndex = cursor.getColumnIndex("id");
             int columnNameIndex = cursor.getColumnIndex("name");
             int columnDescIndex = cursor.getColumnIndex("description");
-            int j =0;
             do{
                 int id = cursor.getInt(columnIdIndex);
                 String name = cursor.getString(columnNameIndex);
@@ -59,22 +72,23 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 TextView desc = (TextView) custom_layout.findViewById(R.id.descriptionview);
                 desc.setText(description);
                 custom_layout.setId(id);
-                ids[j]=id;
                 textmarker.setText(name);
                 custom_layout.setOnClickListener(this);
                 layout.addView(custom_layout);
                 Integer[] MassRoboto = new Integer[]{R.id.name, R.id.description_text};
                 for (Integer i = 0; i < MassRoboto.length; i++) {
-                    TextView lay = (TextView) custom_layout.findViewById(MassRoboto[i]);
+                     TextView lay = (TextView) custom_layout.findViewById(MassRoboto[i]);
                     lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
                 }
-                j++;
             }while(cursor.moveToNext());
         }
         else{
+            //нихера не делать
         }
         cursor.close();
         dbHelper.close();
+
+
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout addbutton = new LinearLayout(this);
         int gravity = Gravity.CENTER;
@@ -107,6 +121,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
+
     public void gonelay(int scroll, int screen, int length, int childs, int heightoneelem, LinearLayout parent){
         Animation anim = null;
         int onscreen = Math.round((screen*childs)/length); // количество одновременно показаных эл-тов на экране.
@@ -114,7 +129,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         for(int i=0; i<childs; i++){
             final View child = parent.getChildAt(i);
             child.setVisibility(View.INVISIBLE);
-
         }
         for(int i=currentpos+1; i<currentpos+onscreen; i++){
             final View vision = parent.getChildAt(i);
@@ -132,8 +146,17 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
 
         }
     }
+
+
+    // anim = new AlphaAnimation(0, 1);
+    //anim.setInterpolator(new DecelerateInterpolator()); //add this
+    //anim.setDuration(500);
+    //child.startAnimation(anim);
+
     @Override
     public void onClick(View v) {
+
+
     if(v.getId()==R.id.addbutton) {
         Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
         startActivity(intObj);
@@ -147,39 +170,46 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         v.getParent();
     }
     else{
-        int numberOfBooleanMassive = 0;
-        int idOfParent = v.getId();
-        Log.e("TagTagTag",Integer.toString(idOfParent));
-        for(int i =0;i<ids.length;i++){
-            if(idOfParent==ids[i]){
-                numberOfBooleanMassive = i;
-                Log.e("TagTagTag",Integer.toString(ids[i]));
-                break;
-            }
-        }
-        Log.e("TagTagTag",Integer.toString(numberOfBooleanMassive)+"/"+openOrNot[numberOfBooleanMassive]);
-        if(openOrNot[numberOfBooleanMassive]) {
-            try {
-                LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
-                gonedlayout.setVisibility(View.GONE);
-                ImageView imagegone = (ImageView) v.findViewById(R.id.more);
-                imagegone.setVisibility(View.VISIBLE);
-                openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
-            }catch (Exception e){
-                Log.e("error",e.toString());
-            }
-        }
-        else{
+        /**/
+
+        if(!openornot) {
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
                 gonedlayout.setVisibility(View.VISIBLE);
                 ImageView imagegone = (ImageView) v.findViewById(R.id.more);
                 imagegone.setVisibility(View.GONE);
-                openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
+
+                openornot = !openornot;
             }catch (Exception e){
                 Log.e("error",e.toString());
             }
+
         }
+        else{
+            try {
+                LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
+                gonedlayout.setVisibility(View.GONE);
+                ImageView imagegone = (ImageView) v.findViewById(R.id.more);
+                imagegone.setVisibility(View.VISIBLE);
+                openornot = !openornot;
+            }catch (Exception e){
+                Log.e("error",e.toString());
+            }
+            }
     }
     }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

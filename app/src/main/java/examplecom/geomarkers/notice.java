@@ -35,7 +35,7 @@ public class notice {
                 0, notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentIntent(contentIntent)
-                .setSmallIcon(R.drawable.add)
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle("Вы находитесь близко к метке")
                 .setContentText("\""+ name+"\""); // Текст уведомления
 

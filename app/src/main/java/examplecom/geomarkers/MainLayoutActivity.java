@@ -12,8 +12,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
@@ -88,6 +93,44 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         plusParams.setMargins(10, 10, 10, 10);
         plusParams.gravity = Gravity.CENTER;
         addplus.addView(imgv, plusParams);
+        final ScrollView mainscroll = (ScrollView)findViewById(R.id.scroll);
+        mainscroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                LinearLayout parent = (LinearLayout) findViewById(R.id.others);
+                int scrollY = mainscroll.getScrollY();
+                int screen = mainscroll.getHeight();
+                int childs = parent.getChildCount();
+                int lenght = parent.getHeight();
+                int heightoneelem = lenght/childs;
+                gonelay(scrollY, screen, lenght, childs, heightoneelem, parent);
+            }
+        });
+    }
+    public void gonelay(int scroll, int screen, int length, int childs, int heightoneelem, LinearLayout parent){
+        Animation anim = null;
+        int onscreen = Math.round((screen*childs)/length); // количество одновременно показаных эл-тов на экране.
+        int currentpos = Math.round(scroll/heightoneelem);
+        for(int i=0; i<childs; i++){
+            final View child = parent.getChildAt(i);
+            child.setVisibility(View.INVISIBLE);
+
+        }
+        for(int i=currentpos+1; i<currentpos+onscreen; i++){
+            final View vision = parent.getChildAt(i);
+            anim = new AlphaAnimation(50, 100);
+            anim.setInterpolator(new DecelerateInterpolator());
+            anim.setDuration(10);
+            anim.setAnimationListener(new Animation.AnimationListener() {
+                public void onAnimationStart(Animation animation) {}
+                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationEnd(Animation animation) {
+                    vision.setVisibility(View.VISIBLE);
+                }
+            });
+            vision.startAnimation(anim);
+
+        }
     }
     @Override
     public void onClick(View v) {

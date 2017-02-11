@@ -20,9 +20,9 @@ class DBHelper extends SQLiteOpenHelper {                                       
                 + "longitude double,"
                 + "signal integer" + ");");
     }
-    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS + TABLE_NAME");
+        db.execSQL("DROP TABLE IF EXISTS + TABLE\n" +
+                "    @Override_NAME");
         onCreate(db);                                       //метод обновления при устаревании версии (фактически не нужен)
     }
 }

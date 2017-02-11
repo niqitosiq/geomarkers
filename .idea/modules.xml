@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/project.iml" filepath="$PROJECT_DIR$/project.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/geomakers.iml" filepath="$PROJECT_DIR$/geomakers.iml" />
+>>>>>>> 5b3b6d203723470fd20b48c9cb5846db591da568
     </modules>
   </component>
 </project>

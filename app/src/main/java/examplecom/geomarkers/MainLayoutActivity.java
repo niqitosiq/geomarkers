@@ -12,9 +12,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import java.util.Arrays;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
     int id = 0;
@@ -88,6 +97,108 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         plusParams.setMargins(10, 10, 10, 10);
         plusParams.gravity = Gravity.CENTER;
         addplus.addView(imgv, plusParams);
+        final ScrollView mainscroll = (ScrollView)findViewById(R.id.scroll);
+        mainscroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                LinearLayout parent = (LinearLayout) findViewById(R.id.others);
+                int scrollY = mainscroll.getScrollY();
+                int screen = mainscroll.getHeight();
+                int childs = parent.getChildCount();
+                int lenght = parent.getHeight();
+                int heightoneelem = lenght/childs;
+                offsetlay(scrollY, screen, lenght, childs, heightoneelem, parent);
+            }
+        });
+    }
+    public void offsetlay(int scroll, int screen, int length, int childs, int normal_size, LinearLayout parent){
+        int onscreen = Math.round((screen*childs)/length)-2; // количество одновременно показаных эл-тов на экране. 2 - количество скрываемых
+        //Log.i("SCALE", Integer.toString(onscreen) + "," + Integer.toString(currentpos));
+        int s_active = Math.round(scroll/normal_size) + 1; // Начало активной области
+        int e_active = s_active + onscreen; // окончание активной области
+        final LinearLayout main = parent;
+        Log.i("Activity", Integer.toString(s_active) + ", " + Integer.toString(e_active));
+
+
+        for (int i=s_active, procent = 100; i>-1; i--, procent= procent-10){
+            final View toanim = main.getChildAt(i);
+            if (procent > 0) {
+                ScaleAnimation scale = new ScaleAnimation(
+                        1.0f, (float) procent / 100,
+                        1.0f, (float) procent / 100,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                TranslateAnimation translate = new TranslateAnimation(
+                        0.0f, 0.0f, 0.0f, (((float) procent) / 10)
+                );
+                Animation goneout = new AlphaAnimation(0.0f, 1.0f);
+                goneout.setDuration(500);
+                goneout.setFillAfter(false);
+                final AnimationSet set = new AnimationSet(true);
+                set.addAnimation(translate);
+                set.setDuration(1000);
+                set.addAnimation(scale);
+                set.setFillAfter(true);
+                Animation gonein = new AlphaAnimation(1.0f, 0.0f);
+                gonein.setDuration(250);
+                gonein.setFillAfter(true);
+                gonein.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        toanim.startAnimation(set);
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                toanim.startAnimation(gonein);
+            }
+        }
+
+        for (int i=e_active+1, procent = 100; i<childs; i++, procent= procent-10) {
+            if (procent > 0) {
+                final View toanim = main.getChildAt(i);
+                final ScaleAnimation scale = new ScaleAnimation(
+                        1.0f, (float) procent / 100,
+                        1.0f, (float) procent / 100,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                TranslateAnimation translate = new TranslateAnimation(
+                        0.0f, 0.0f, 1.0f, -(((float) procent) / 10)
+                );
+                Animation goneout = new AlphaAnimation(0.0f, 1.0f);
+                goneout.setDuration(500);
+                final AnimationSet set = new AnimationSet(true);
+                set.addAnimation(translate);
+                set.addAnimation(scale);
+                set.addAnimation(goneout);
+                set.setDuration(1000);
+                set.setFillAfter(true);
+                Animation gonein = new AlphaAnimation(1.0f, 0.0f);
+                gonein.setDuration(250);
+                gonein.setFillAfter(false);
+                gonein.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        toanim.startAnimation(set);
+                    }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                toanim.startAnimation(gonein);
+            }
+        }
+
     }
     @Override
     public void onClick(View v) {

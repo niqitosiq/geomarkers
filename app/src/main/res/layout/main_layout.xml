@@ -26,9 +26,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/default_rectangle"
-                android:layout_margin="10dp"
                 android:id="@+id/state_rect"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -120,9 +121,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/scroll"
                 android:layout_marginLeft="17dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="17dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginRight="17dp">
 
                 <LinearLayout
                     android:orientation="vertical"

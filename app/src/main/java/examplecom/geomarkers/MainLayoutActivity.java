@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -110,16 +112,35 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 offsetlay(scrollY, screen, lenght, childs, heightoneelem, parent);
             }
         });
+
+        LinearLayout rects = (LinearLayout)findViewById(R.id.others_rect);
+        rects.setOnTouchListener(new OnSwipeTouchListener(MainLayoutActivity.this) {
+            public void onSwipeTop() {
+                Toast.makeText(MainLayoutActivity.this, "top", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeRight() {
+                Toast.makeText(MainLayoutActivity.this, "right", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeLeft() {
+                Toast.makeText(MainLayoutActivity.this, "left", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeBottom() {
+                Toast.makeText(MainLayoutActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        super.dispatchTouchEvent(ev);
+        return productGestureDetector.onTouchEvent(ev);
     }
     public void offsetlay(int scroll, int screen, int length, int childs, int normal_size, LinearLayout parent){
-        int onscreen = Math.round((screen*childs)/length)-2; // количество одновременно показаных эл-тов на экране. 2 - количество скрываемых
+        int onscreen = Math.round((screen*childs)/length)-3; // количество одновременно показаных эл-тов на экране. 2 - количество скрываемых
         //Log.i("SCALE", Integer.toString(onscreen) + "," + Integer.toString(currentpos));
         int s_active = Math.round(scroll/normal_size) + 1; // Начало активной области
         int e_active = s_active + onscreen; // окончание активной области
         final LinearLayout main = parent;
-        Log.i("Activity", Integer.toString(s_active) + ", " + Integer.toString(e_active));
-
-
         for (int i=s_active, procent = 100; i>-1; i--, procent= procent-10){
             final View toanim = main.getChildAt(i);
             if (procent > 0) {
@@ -128,7 +149,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                         1.0f, (float) procent / 100,
                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 TranslateAnimation translate = new TranslateAnimation(
-                        0.0f, 0.0f, 0.0f, (((float) procent) / 10)
+                        0.0f, 0.0f, 0.0f, (((float) 100-procent) / 100)
                 );
                 Animation goneout = new AlphaAnimation(0.0f, 1.0f);
                 goneout.setDuration(500);
@@ -167,7 +188,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                         1.0f, (float) procent / 100,
                         Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 TranslateAnimation translate = new TranslateAnimation(
-                        0.0f, 0.0f, 1.0f, -(((float) procent) / 10)
+                        0.0f, 0.0f, 1.0f, -(((float) 100-procent) / 100)
                 );
                 Animation goneout = new AlphaAnimation(0.0f, 1.0f);
                 goneout.setDuration(500);
@@ -184,7 +205,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onAnimationStart(Animation animation) {
                     }
-
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         toanim.startAnimation(set);
@@ -217,15 +237,12 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
     else{
         int numberOfBooleanMassive = 0;
         int idOfParent = v.getId();
-        Log.e("TagTagTag",Integer.toString(idOfParent));
         for(int i =0;i<ids.length;i++){
             if(idOfParent==ids[i]){
                 numberOfBooleanMassive = i;
-                Log.e("TagTagTag",Integer.toString(ids[i]));
                 break;
             }
         }
-        Log.e("TagTagTag",Integer.toString(numberOfBooleanMassive)+"/"+openOrNot[numberOfBooleanMassive]);
         if(openOrNot[numberOfBooleanMassive]) {
             try {
                 LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
@@ -234,7 +251,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 imagegone.setVisibility(View.VISIBLE);
                 openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
             }catch (Exception e){
-                Log.e("error",e.toString());
             }
         }
         else{
@@ -245,7 +261,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 imagegone.setVisibility(View.GONE);
                 openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
             }catch (Exception e){
-                Log.e("error",e.toString());
             }
         }
     }

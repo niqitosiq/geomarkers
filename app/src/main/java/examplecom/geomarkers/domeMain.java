@@ -16,7 +16,8 @@ public class domeMain extends Activity implements Runnable {
     private LocationManager locationManager;
     private Context mContext;
     private double[] latitudes = new double[128];
-    private double[] longitudes= new double[128];
+    private double[] longitudes = new double[128];
+    private short[] radius = new short[128];
     private String[] name= new String[128];
     int[] signal = new int[128];
     private double radiusDome;
@@ -73,6 +74,7 @@ public class domeMain extends Activity implements Runnable {
             int columnLongitudeIndex = cursor.getColumnIndex("longitude");
             int columnSignalIndex = cursor.getColumnIndex("signal");
             int columnNameIndex = cursor.getColumnIndex("name");
+            int columnRadiusIndex = cursor.getColumnIndex("radius");
             do {
                 latitudes[i]= cursor.getDouble(columnLatitudeIndex);
                 longitudes[i]= cursor.getDouble(columnLongitudeIndex);
@@ -94,13 +96,13 @@ public class domeMain extends Activity implements Runnable {
         if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)==true) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                     1000 * 10, 10, locationListener);
-            radiusDome = 0.001000;
+            radiusDome = 0.000900;
         }
         if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)==true) {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
                     locationListener);
-            radiusDome = 0.001800;
+            radiusDome = 0.000900;
         }
     }
     LocationListener locationListener = new LocationListener() {
@@ -148,10 +150,10 @@ public class domeMain extends Activity implements Runnable {
         if (geolocation!=null){
             for (int i = 0; i < latitudes.length; i++) {
                 if(signal[i]==1){
-                    double positiveLatitudeLimit = latitudes[i]+radiusDome;
-                    double negativeLatitudeLimit =latitudes[i]-radiusDome;
-                    double positiveLongitudeLimit =longitudes[i]+radiusDome;
-                    double negativeLongitudeLimit =longitudes[i]-radiusDome;
+                    double positiveLatitudeLimit = latitudes[i]+radiusDome*radius[i];
+                    double negativeLatitudeLimit =latitudes[i]-radiusDome*radius[i];
+                    double positiveLongitudeLimit =longitudes[i]+radiusDome*radius[i];
+                    double negativeLongitudeLimit =longitudes[i]-radiusDome*radius[i];
                     if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
                         if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
                             notice alarm = new notice();

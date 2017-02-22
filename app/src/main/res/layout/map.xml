@@ -17,10 +17,20 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="false"
-        android:gravity="right">
+        android:layout_alignParentStart="true">
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBarRadius"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -28,7 +38,30 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circle"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:id="@+id/markerSetting">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="окей короч"
+                android:id="@+id/markerSettings"
+                android:onClick="markerSettings"
+                android:clickable="true"
+                android:src="@drawable/settings"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="17dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/findLoc">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -50,7 +83,8 @@
             android:background="@drawable/circle"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:id="@+id/addMarker">
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -1,13 +1,16 @@
 package examplecom.geomarkers;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,6 +25,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,8 @@ import java.util.Arrays;
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
     int id = 0;
     boolean[] openOrNot = new boolean[128];
+    private GestureDetector detector;
+    private View.OnTouchListener listner;
     int[] ids=new int[128];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,27 +119,63 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        LinearLayout rects = (LinearLayout)findViewById(R.id.others_rect);
-        rects.setOnTouchListener(new OnSwipeTouchListener(MainLayoutActivity.this) {
-            public void onSwipeTop() {
-                Toast.makeText(MainLayoutActivity.this, "top", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeRight() {
-                Toast.makeText(MainLayoutActivity.this, "right", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeLeft() {
-                Toast.makeText(MainLayoutActivity.this, "left", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeBottom() {
-                Toast.makeText(MainLayoutActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+        detector = new GestureDetector(new Swipelistner(){
+            boolean showtrig = true;
+            final LinearLayout tohide = (LinearLayout) findViewById(R.id.main_rect);
+            final LinearLayout rectangels = (LinearLayout) findViewById(R.id.others_rect);
+            @Override
+            public void open() {
+                if (showtrig == true){
+
+                    TranslateAnimation translate = new TranslateAnimation(0.0f, 0.0f, 1.0f, -200.0f);
+                    translate.setDuration(200);
+                    translate.setFillAfter(true);
+                    translate.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            rectangels.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, 0f));
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                    tohide.startAnimation(translate);
+                    showtrig = false;
+                }
             }
 
+            @Override
+            public void close() {
+                if (showtrig == false) {
+                    rectangels.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, 1f));
+                    TranslateAnimation translate = new TranslateAnimation(0.0f, 0.0f, -200.0f, 0.0f);
+                    translate.setDuration(200);
+                    translate.setFillAfter(true);
+                    tohide.startAnimation(translate);
+                    showtrig = true;
+                }
+            }
         });
-    }
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev){
-        super.dispatchTouchEvent(ev);
-        return productGestureDetector.onTouchEvent(ev);
+        listner = new View.OnTouchListener()
+        {
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if (detector.onTouchEvent(event))
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        };
+        mainscroll.setOnTouchListener(listner);
     }
     public void offsetlay(int scroll, int screen, int length, int childs, int normal_size, LinearLayout parent){
         int onscreen = Math.round((screen*childs)/length)-3; // количество одновременно показаных эл-тов на экране. 2 - количество скрываемых
@@ -218,6 +260,14 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 toanim.startAnimation(gonein);
             }
         }
+        for (int i = s_active+1; i<e_active; i++){
+            final View toanim = main.getChildAt(i);
+            final ScaleAnimation scale = new ScaleAnimation(
+                    1.0f, 1.0f,
+                    1.0f,  1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            toanim.startAnimation(scale);
+        }
 
     }
     @Override
@@ -264,5 +314,46 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             }
         }
     }
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev){
+        super.dispatchTouchEvent(ev);
+        return detector.onTouchEvent(ev);
+    }
+}
+class Swipelistner extends GestureDetector.SimpleOnGestureListener {
+
+    private static final int SWIPE_THRESHOLD = 20;
+    private static final int SWIPE_VELOCITY_THRESHOLD = 20;
+    public void close(){
+    };
+    public void open(){
+
+    };
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        boolean result = false;
+        try {
+            float diffY = e2.getY() - e1.getY();
+            float diffX = e2.getX() - e1.getX();
+            if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffY > -250) {
+                    close();
+                } else {
+                    open();
+                }
+            }
+            result = true;
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return result;
     }
 }

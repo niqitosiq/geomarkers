@@ -44,7 +44,7 @@ private LatLng coordinates;
         double latitude;
         double longitude;
         boolean settings=false;
-        int radius=50;
+        int radius=0;
 
 @Override
 public void onCreate(Bundle savedInstanceState){
@@ -136,7 +136,7 @@ public void sendCoordinates(View v){
         intent.putExtra("nameField",getIntent().getStringExtra("name"));
         intent.putExtra("descField",getIntent().getStringExtra("description"));
         intent.putExtra("switchPos",getIntent().getBooleanExtra("signalOrNot",false));
-        //intent.putExtra("radiusNumb",);
+        intent.putExtra("radiusNumb",radius);
         intent.putExtra("latitude",coordinates.latitude);
         intent.putExtra("longitude",coordinates.longitude);
         int id=getIntent().getIntExtra("id",0);

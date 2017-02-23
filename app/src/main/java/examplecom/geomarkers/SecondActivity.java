@@ -24,6 +24,7 @@ public class SecondActivity extends AppCompatActivity {
     double latitude;
     double longitudeFromMap;
     double latitudeFromMap;
+    int radius;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         longitudeFromMap = getIntent().getDoubleExtra("longitude",0);
         latitudeFromMap = getIntent().getDoubleExtra("latitude",0);
+        radius = getIntent().getIntExtra("radius",0);
         EditText nameField = (EditText)findViewById(R.id.title_edit);
         EditText descField = (EditText)findViewById(R.id.description_edit);
         Switch signalOrNot = (Switch)findViewById(R.id.alarm_switch);
@@ -151,6 +153,7 @@ public class SecondActivity extends AppCompatActivity {
                 cv.put("latitude",latitudeFromMap);
                 cv.put("longitude",longitudeFromMap);
                 cv.put("signal", sw.isChecked());
+                cv.put("radius",radius);
                 DBHelper dbHelper = new DBHelper(this);
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 db.insert("geomarkers", null, cv);

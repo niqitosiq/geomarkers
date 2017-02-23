@@ -18,11 +18,12 @@ class DBHelper extends SQLiteOpenHelper {                                       
                 + "description text,"
                 + "latitude double,"
                 + "longitude double,"
+                + "radius integer,"
                 + "signal integer" + ");");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS + TABLE_NAME");
-        onCreate(db);                                       //метод обновления при устаревании версии (фактически не нужен)
+        onCreate(db);                                       //метод обновления при устаревании версии (фактически не нужен)radius
     }
 }

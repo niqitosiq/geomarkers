@@ -17,7 +17,7 @@ public class domeMain extends Activity implements Runnable {
     private Context mContext;
     private double[] latitudes = new double[128];
     private double[] longitudes = new double[128];
-    private short[] radius = new short[128];
+    private int[] radius = new int[128];
     private String[] name= new String[128];
     int[] signal = new int[128];
     private double radiusDome;
@@ -78,6 +78,7 @@ public class domeMain extends Activity implements Runnable {
             do {
                 latitudes[i]= cursor.getDouble(columnLatitudeIndex);
                 longitudes[i]= cursor.getDouble(columnLongitudeIndex);
+                radius[i]= cursor.getInt(columnRadiusIndex);
                 signal[i]= cursor.getInt(columnSignalIndex);
                 name[i]= cursor.getString(columnNameIndex);
                 i++;
@@ -150,10 +151,10 @@ public class domeMain extends Activity implements Runnable {
         if (geolocation!=null){
             for (int i = 0; i < latitudes.length; i++) {
                 if(signal[i]==1){
-                    double positiveLatitudeLimit = latitudes[i]+radiusDome*radius[i];
-                    double negativeLatitudeLimit =latitudes[i]-radiusDome*radius[i];
-                    double positiveLongitudeLimit =longitudes[i]+radiusDome*radius[i];
-                    double negativeLongitudeLimit =longitudes[i]-radiusDome*radius[i];
+                    double positiveLatitudeLimit = latitudes[i]+radiusDome*(radius[i]/100);
+                    double negativeLatitudeLimit =latitudes[i]-radiusDome*(radius[i]/100);
+                    double positiveLongitudeLimit =longitudes[i]+radiusDome*(radius[i]/100);
+                    double negativeLongitudeLimit =longitudes[i]-radiusDome*(radius[i]/100);
                     if(geolocation.getLatitude()<positiveLatitudeLimit&geolocation.getLatitude()>negativeLatitudeLimit){
                         if(geolocation.getLongitude()<positiveLongitudeLimit&geolocation.getLongitude()>negativeLongitudeLimit){
                             notice alarm = new notice();

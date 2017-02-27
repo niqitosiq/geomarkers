@@ -19,16 +19,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main_rect"
-            android:layout_weight="4">
+            android:layout_weight="2">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/default_rectangle"
-                android:layout_margin="10dp"
                 android:id="@+id/state_rect"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <LinearLayout
                     android:orientation="horizontal"

@@ -37,6 +37,9 @@ public class loadingscreen extends AppCompatActivity {
                 for(int i = 0; i<3; i++){
                     startActivity(intentmass[i]);
                 }
+
+                startService(new Intent(loadingscreen.this, dome.class));
+
                 ImageView statusimg = (ImageView) findViewById(R.id.checkload2);
                 statusimg.setImageResource(R.drawable.ic_checked);
                 finish();

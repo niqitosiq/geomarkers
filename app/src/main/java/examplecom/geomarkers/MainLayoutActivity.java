@@ -29,21 +29,23 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Line;
+
 import java.util.Arrays;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
     int id = 0;
-    boolean[] openOrNot = new boolean[128];
+    int currentid;
     private GestureDetector detector;
     private View.OnTouchListener listner;
-    int[] ids=new int[128];
+    int openid = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        for(int i = 0; i<openOrNot.length;i++){openOrNot[i]=false;}
+
         //db.delete("geomarkers",null,null);            //если присутствуют баги разкоммитить это и запустить один раз (очищает Базу данных)
         Integer[] MassIntro = new Integer[]{R.id.TodoList};
         for (Integer i = 0; i < MassIntro.length; i++) {
@@ -71,7 +73,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 TextView desc = (TextView) custom_layout.findViewById(R.id.descriptionview);
                 desc.setText(description);
                 custom_layout.setId(id);
-                ids[j]=id;
                 textmarker.setText(name);
                 custom_layout.setOnClickListener(this);
                 layout.addView(custom_layout);
@@ -87,6 +88,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         }
         cursor.close();
         dbHelper.close();
+        // Генерация стандартных кнопок
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout addbutton = new LinearLayout(this);
         int gravity = Gravity.CENTER;
@@ -105,6 +107,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         plusParams.setMargins(10, 10, 10, 10);
         plusParams.gravity = Gravity.CENTER;
         addplus.addView(imgv, plusParams);
+        // Листнер для анимации
         final ScrollView mainscroll = (ScrollView)findViewById(R.id.scroll);
         mainscroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
@@ -118,7 +121,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 offsetlay(scrollY, screen, lenght, childs, heightoneelem, parent);
             }
         });
-
+        // Листнер для автоскрытия блока "заметки"
         detector = new GestureDetector(new Swipelistner(){
             boolean showtrig = true;
             final LinearLayout tohide = (LinearLayout) findViewById(R.id.main_rect);
@@ -177,6 +180,8 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         };
         mainscroll.setOnTouchListener(listner);
     }
+
+    // Описание анимации на главном экране
     public void offsetlay(int scroll, int screen, int length, int childs, int normal_size, LinearLayout parent){
         int onscreen = Math.round((screen*childs)/length)-3; // количество одновременно показаных эл-тов на экране. 2 - количество скрываемых
         //Log.i("SCALE", Integer.toString(onscreen) + "," + Integer.toString(currentpos));
@@ -272,48 +277,62 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
     }
     @Override
     public void onClick(View v) {
-    if(v.getId()==R.id.addbutton) {
-        Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
-        startActivity(intObj);
-    }
-    else if (v.getId()==R.id.settings) {
-        Intent intObj = new Intent(this, SecondActivity.class);
-        LinearLayout layoutparent = (LinearLayout)v.getParent().getParent().getParent().getParent().getParent().getParent();
-        id =  layoutparent.getId();;
-        intObj.putExtra("id",id);
-        startActivity(intObj); //стартуем СекондАктивити.класс для редактирования или удаления заметок
-        v.getParent();
-    }
-    else{
-        int numberOfBooleanMassive = 0;
-        int idOfParent = v.getId();
-        for(int i =0;i<ids.length;i++){
-            if(idOfParent==ids[i]){
-                numberOfBooleanMassive = i;
-                break;
+        if (v.getId() == R.id.addbutton) {
+            Intent intObj = new Intent(this, SecondActivity.class); //стартуем СекондАктивити.класс
+            startActivity(intObj);
+        } else if (v.getId() == R.id.settings) {
+            Intent intObj = new Intent(this, SecondActivity.class);
+            LinearLayout layoutparent = (LinearLayout) v.getParent().getParent().getParent().getParent().getParent().getParent();
+            id = layoutparent.getId();
+            ;
+            intObj.putExtra("id", id);
+            startActivity(intObj); //стартуем СекондАктивити.класс для редактирования или удаления заметок
+            v.getParent();
+        } else {//Значит, текущее вью - блок заметки
+            LinearLayout mainparent = (LinearLayout) findViewById(R.id.others);
+            for (int i = 0; i < mainparent.getChildCount(); i++) {
+                if (mainparent.getChildAt(i).getId() == v.getId()) {
+                    currentid = i;
+                }
             }
+            tohidenotes(currentid);
         }
-        if(openOrNot[numberOfBooleanMassive]) {
-            try {
-                LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
+    }
+
+    private void tohidenotes(Integer currentid){
+        LinearLayout mainparent = (LinearLayout) findViewById(R.id.others);
+        if (currentid != openid) {//Если элемент на который было произведено нажатие не был предварительно открыт
+            //закрыть все кроме текущего
+            for (int i = 0; i<mainparent.getChildCount()-1;i++){
+                View currentelem = mainparent.getChildAt(i);
+                if (i!=currentid){
+                    LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
+                    gonedlayout.setVisibility(View.GONE);
+                    ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
+                    imagegone.setVisibility(View.VISIBLE);
+                }
+                else {
+                    openid = currentid;
+                    LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
+                    gonedlayout.setVisibility(View.VISIBLE);
+                    ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
+                    imagegone.setVisibility(View.GONE);
+                }
+                if (openid == -1) {//Если клик не первый. (начальное значение переменной -1)
+                    openid = currentid;
+                }
+            }
+        } else {
+            openid = -1;
+            for (int i = 0; i < mainparent.getChildCount() - 1; i++) {
+                View currentelem = mainparent.getChildAt(i);
+                LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
                 gonedlayout.setVisibility(View.GONE);
-                ImageView imagegone = (ImageView) v.findViewById(R.id.more);
+                ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
                 imagegone.setVisibility(View.VISIBLE);
-                openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
-            }catch (Exception e){
+
             }
         }
-        else{
-            try {
-                LinearLayout gonedlayout = (LinearLayout) v.findViewById(R.id.main_action);
-                gonedlayout.setVisibility(View.VISIBLE);
-                ImageView imagegone = (ImageView) v.findViewById(R.id.more);
-                imagegone.setVisibility(View.GONE);
-                openOrNot[numberOfBooleanMassive] = !openOrNot[numberOfBooleanMassive];
-            }catch (Exception e){
-            }
-        }
-    }
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev){

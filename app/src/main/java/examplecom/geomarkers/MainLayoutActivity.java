@@ -1,36 +1,14 @@
 package examplecom.geomarkers;
 
-
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.ContentResolver;
-import android.content.Context;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.IntentSender;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.UserHandle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,16 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Line;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 
 public class MainLayoutActivity extends AppCompatActivity implements View.OnClickListener {
@@ -144,12 +113,8 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onScrollChanged() {
                 LinearLayout parent = (LinearLayout) findViewById(R.id.others);
-                int scrollY = mainscroll.getScrollY();
-                int screen = mainscroll.getHeight();
-                int childs = parent.getChildCount();
-                int lenght = parent.getHeight();
-                int heightoneelem = lenght/childs;
-                offsetlay(scrollY, screen, lenght, childs, heightoneelem, parent);
+                int[] datamass = getdata();
+                offsetlay(datamass[0], datamass[1], datamass[2], datamass[3], datamass[4], parent);
             }
         });
         // Листнер для автоскрытия блока "заметки"
@@ -172,7 +137,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            rectangels.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, 0f));
+                            rectangels.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 0f));
                         }
 
                         @Override
@@ -187,7 +152,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void close() {
                 if (showtrig == false) {
-                    rectangels.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, 1f));
+                    rectangels.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
                     TranslateAnimation translate = new TranslateAnimation(0.0f, 0.0f, -200.0f, 0.0f);
                     translate.setDuration(200);
                     translate.setFillAfter(true);
@@ -229,36 +194,16 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 TranslateAnimation translate = new TranslateAnimation(
                         0.0f, 0.0f, 0.0f, (((float) 100-procent) / 100)
                 );
-                Animation goneout = new AlphaAnimation(0.0f, 1.0f);
-                goneout.setDuration(500);
-                goneout.setFillAfter(false);
                 final AnimationSet set = new AnimationSet(true);
                 set.addAnimation(translate);
                 set.setDuration(1000);
                 set.addAnimation(scale);
                 set.setFillAfter(true);
-                Animation gonein = new AlphaAnimation(1.0f, 0.0f);
-                gonein.setDuration(250);
-                gonein.setFillAfter(true);
-                gonein.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        toanim.startAnimation(set);
-                    }
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-                toanim.startAnimation(gonein);
+                toanim.startAnimation(set);
             }
         }
 
-        for (int i=e_active+1, procent = 100; i<childs; i++, procent= procent-10) {
+        for (int i=e_active, procent = 100; i<childs; i++, procent= procent-10) {
             if (procent > 0) {
                 final View toanim = main.getChildAt(i);
                 final ScaleAnimation scale = new ScaleAnimation(
@@ -268,35 +213,15 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 TranslateAnimation translate = new TranslateAnimation(
                         0.0f, 0.0f, 1.0f, -(((float) 100-procent) / 100)
                 );
-                Animation goneout = new AlphaAnimation(0.0f, 1.0f);
-                goneout.setDuration(500);
                 final AnimationSet set = new AnimationSet(true);
                 set.addAnimation(translate);
                 set.addAnimation(scale);
-                set.addAnimation(goneout);
                 set.setDuration(1000);
                 set.setFillAfter(true);
-                Animation gonein = new AlphaAnimation(1.0f, 0.0f);
-                gonein.setDuration(250);
-                gonein.setFillAfter(false);
-                gonein.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                    }
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        toanim.startAnimation(set);
-                    }
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-
-                toanim.startAnimation(gonein);
+                toanim.startAnimation(set);
             }
         }
-        for (int i = s_active+1; i<e_active; i++){
+        for (int i = s_active; i<e_active; i++){
             final View toanim = main.getChildAt(i);
             final ScaleAnimation scale = new ScaleAnimation(
                     1.0f, 1.0f,
@@ -337,17 +262,11 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             for (int i = 0; i<mainparent.getChildCount()-1;i++){
                 View currentelem = mainparent.getChildAt(i);
                 if (i!=currentid){
-                    LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
-                    gonedlayout.setVisibility(View.GONE);
-                    ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
-                    imagegone.setVisibility(View.VISIBLE);
+                    open(currentelem, currentid);
                 }
                 else {
                     openid = currentid;
-                    LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
-                    gonedlayout.setVisibility(View.VISIBLE);
-                    ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
-                    imagegone.setVisibility(View.GONE);
+                    close(currentelem);
                 }
                 if (openid == -1) {//Если клик не первый. (начальное значение переменной -1)
                     openid = currentid;
@@ -357,14 +276,44 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
             openid = -1;
             for (int i = 0; i < mainparent.getChildCount() - 1; i++) {
                 View currentelem = mainparent.getChildAt(i);
-                LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
-                gonedlayout.setVisibility(View.GONE);
-                ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
-                imagegone.setVisibility(View.VISIBLE);
-
+                open(currentelem, currentid);
             }
         }
     }
+    private void close(View currentelem){//закрытие вкладки "заметки
+        LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
+        gonedlayout.setVisibility(View.VISIBLE);
+        ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
+        imagegone.setVisibility(View.GONE);
+    }
+    private void open(View currentelem, int numberof){//открытие вкладки "заметки
+
+        //открытие
+        LinearLayout gonedlayout = (LinearLayout) currentelem.findViewById(R.id.main_action);
+        gonedlayout.setVisibility(View.GONE);
+        ImageView imagegone = (ImageView) currentelem.findViewById(R.id.more);
+        imagegone.setVisibility(View.VISIBLE);
+
+        //анимация
+        int[] maindata = getdata();//Получение данных из общего метода
+        int toscrollheight = maindata[4]*numberof;//получение координаты для промотки
+        ScrollView mainscroll = (ScrollView)findViewById(R.id.scroll);
+        ObjectAnimator.ofInt(mainscroll, "scrollY",  (toscrollheight-300)).setDuration(500).start();
+    }
+    private int[] getdata(){// метод получения актуальных значений свойств элементов из любого участка кода (дабы не выделять эти переменные по сто раз)
+        ScrollView mainscroll = (ScrollView)findViewById(R.id.scroll);
+        LinearLayout parent = (LinearLayout) findViewById(R.id.others);
+        int scrollY = mainscroll.getScrollY();
+        int screen = mainscroll.getHeight();
+        int lenght = parent.getHeight();
+        int childs = parent.getChildCount();
+        int heightoneelem = lenght/childs;
+        int[] datamass = {scrollY, screen, lenght, childs, heightoneelem};
+        return(datamass);
+    }
+
+
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev){
         super.dispatchTouchEvent(ev);

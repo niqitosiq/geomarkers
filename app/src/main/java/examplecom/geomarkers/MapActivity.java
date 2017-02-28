@@ -28,6 +28,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -40,11 +41,12 @@ import com.google.android.gms.vision.barcode.Barcode;
  */
 public class MapActivity extends Activity implements OnMapReadyCallback,SeekBar.OnSeekBarChangeListener{
         GoogleMap map;
-private LatLng coordinates;
+        Circle circle;
+        private LatLng coordinates;
         double latitude;
         double longitude;
         boolean settings=false;
-        int radius=0;
+        int radius=50;
 
 @Override
 public void onCreate(Bundle savedInstanceState){
@@ -61,7 +63,7 @@ public void onCreate(Bundle savedInstanceState){
 
     @Override
     public void onProgressChanged(SeekBar seekBar,int progress, boolean fromUser){
-        // TODO Auto-generated method stub
+            circle.setRadius(progress);
         }
 
 @Override
@@ -86,7 +88,7 @@ public void onMapReady(final GoogleMap googleMap){
 public void onMapLongClick(LatLng latLng){
         googleMap.clear();
         googleMap.addMarker(new MarkerOptions().position(latLng));
-        googleMap.addCircle(new CircleOptions().center(latLng).radius(radius).strokeColor(Color.argb(255,0,255,0)).fillColor(Color.argb(50,0,255,0)));
+        circle = googleMap.addCircle(new CircleOptions().center(latLng).radius(radius).strokeColor(Color.argb(255,0,255,0)).fillColor(Color.argb(50,0,255,0)));
         coordinates=latLng;
         }
         });
@@ -111,12 +113,11 @@ public void myLocation(View v){
 
 
 public void markerSettings(View v){
-        //LinearLayout button1 = (LinearLayout)findViewById(R.id.markerSetting);
+
         LinearLayout button2=(LinearLayout)findViewById(R.id.findLoc);
         LinearLayout button3=(LinearLayout)findViewById(R.id.addMarker);
         SeekBar radious=(SeekBar)findViewById(R.id.seekBarRadius);
         if(settings==false){
-        //button1.setVisibility(View.GONE);
         button2.setVisibility(View.GONE);
         button3.setVisibility(View.GONE);
         radious.setVisibility(View.VISIBLE);

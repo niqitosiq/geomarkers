@@ -108,6 +108,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         plusParams.gravity = Gravity.CENTER;
         addplus.addView(imgv, plusParams);
         // Листнер для анимации
+        /*
         final ScrollView mainscroll = (ScrollView)findViewById(R.id.scroll);
         mainscroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
@@ -117,6 +118,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 offsetlay(datamass[0], datamass[1], datamass[2], datamass[3], datamass[4], parent);
             }
         });
+        */ // Анимациия убрана в целях повышения юзабилити
         // Листнер для автоскрытия блока "заметки"
         detector = new GestureDetector(new Swipelistner(){
             boolean showtrig = true;
@@ -174,7 +176,7 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         };
-        mainscroll.setOnTouchListener(listner);
+        //mainscroll.setOnTouchListener(listner);
     }
 
     // Описание анимации на главном экране

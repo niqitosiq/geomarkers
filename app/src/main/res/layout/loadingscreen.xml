@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-              android:background="#516265">
+              android:background="@color/colorBlock">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 android:textSize="18sp"
                 android:textAlignment="center"
-                android:textColor="#fff" />
+                android:textColor="@color/colortext" />
         </LinearLayout>
 
     </LinearLayout>

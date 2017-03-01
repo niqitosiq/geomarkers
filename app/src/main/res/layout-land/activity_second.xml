@@ -179,7 +179,7 @@
                             android:layout_height="wrap_content"
                             android:text="Название:"
                             android:id="@+id/title_text"
-                            android:textColor="#fff"
+                            android:textColor="@color/colortext"
                             android:layout_margin="5dp" />
 
                         <EditText
@@ -230,7 +230,7 @@
                             android:layout_height="wrap_content"
                             android:text="Местоположение:"
                             android:id="@+id/map_text"
-                            android:textColor="#fff"
+                            android:textColor="@color/colortext"
                             android:layout_margin="5dp" />
 
                         <RelativeLayout
@@ -277,7 +277,7 @@
                             android:layout_height="fill_parent"
                             android:text="Оповестить когда буду рядом?"
                             android:id="@+id/alarm_text"
-                            android:textColor="#fff"
+                            android:textColor="@color/colortext"
                             android:layout_weight="1"
                             android:gravity="center" />
 

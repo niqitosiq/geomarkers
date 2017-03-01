@@ -25,7 +25,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/default_rectangle"
+                android:background="@drawable/main_background_colors"
                 android:id="@+id/state_rect"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
@@ -62,7 +62,7 @@
                         android:text="Заметки"
                         android:id="@+id/TodoList"
                         android:textSize="35dp"
-                        android:textColor="#fff"
+                        android:textColor="@color/colortext"
                         android:gravity="center" />
                 </LinearLayout>
 

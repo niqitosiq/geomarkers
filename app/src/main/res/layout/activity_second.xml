@@ -1,275 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:orientation="vertical" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background1">
 
     <include layout="@layout/toolbar_activity"
-        android:id="@+id/custom_toolbar"/>
+             android:id="@+id/custom_toolbar"
+             android:layout_width="match_parent"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background1"
-        android:id="@+id/bg_secondactivity"
-        android:layout_below="@+id/custom_toolbar" >
+        android:layout_below="@+id/custom_toolbar">
+        <LinearLayout
+            android:id="@+id/name_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_block_opacity40"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:clipChildren="false"
+            android:gravity="center"
+            android:layout_marginTop="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/TodoList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Редактирование"
+                    android:textColor="@color/textcolor"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/todolistlogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/controls"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:id="@+id/main_rect">
+            android:layout_margin="5dp"
+            android:background="@drawable/background_block_opacity40"
+            android:layout_weight="7">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
+            <ScrollView
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background1"
-                android:layout_margin="10dp">
+                >
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:onClick="comeback">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <ImageView
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/imageView4"
-                        android:background="@drawable/background1"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="25dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp" />
-                </LinearLayout>
+                        android:padding="10dp">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2">
+                        <TextView
+                            android:text="Название:"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView"
+                            android:textColor="@color/textcolor"
+                            android:textSize="18sp"/>
 
-                    <TextView
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:ems="10"
+                            android:id="@+id/editText"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Редактирование"
-                        android:id="@+id/mainText"
-                        android:layout_margin="2dp"
-                        android:textColor="@color/colortext"
-                        android:textSize="22dp"
-                        android:gravity="center" />
+                        android:padding="10dp">
+
+                        <TextView
+                            android:text="Описание:"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView2"
+                            android:textSize="18sp"
+                            android:textColor="@color/textcolor"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine"
+                            android:ems="10"
+                            android:id="@+id/editText3"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:text="Местоположение:"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView3"
+                                android:layout_weight="0"
+                                android:textColor="@color/textcolor"
+                                android:textSize="18sp"/>
+
+                            <TextView
+                                android:text="г.Задрипердищеск р.Патреоцкий ул.Пупкина д.Залупкина 49"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/textView4"
+                                android:layout_weight="0"
+                                android:gravity="bottom|right"
+                                android:textColor="@color/textcolor"/>
+                        </LinearLayout>
+
+                        <fragment
+                            android:layout_width="wrap_content"
+                            android:name="com.google.android.gms.maps.MapFragment"
+                            android:id="@+id/fragment"
+                            android:layout_weight="4"
+                            android:layout_height="150dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:text="Событие:"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView5"
+                            android:textColor="@color/textcolor"
+                            android:textSize="18sp"/>
+
+                        <Button
+                            android:text="Button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/button3"/>
+                    </LinearLayout>
+
                 </LinearLayout>
+            </ScrollView>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"></LinearLayout>
-
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/title_rect">
+            android:background="@drawable/background_block_opacity40"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="right|center">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/background_block_opacity40"
-                android:id="@+id/settings"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:padding="0dp">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:id="@+id/sett"
-                    android:layout_margin="10dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="6"
-                        android:id="@+id/title">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Название:"
-                            android:id="@+id/title_text"
-                            android:textColor="@color/colortext"
-                            android:layout_margin="5dp" />
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/title_edit"
-                            android:layout_margin="5dp"
-                            android:textColor="@color/colortext"
-                            android:inputType="text"
-                            android:maxLength="128" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="6"
-                        android:id="@+id/description">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Описание:"
-                            android:id="@+id/description_text"
-                            android:textColor="@color/colortext"
-                            android:layout_margin="5dp" />
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/description_edit"
-                            android:layout_margin="5dp"
-                            android:inputType="text"
-                            android:editable="false"
-                            android:maxLength="512"
-                            android:textColor="@color/colortext" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="5"
-                        android:id="@+id/map">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Местоположение:"
-                            android:id="@+id/map_text"
-                            android:textColor="@color/colortext"
-                            android:layout_margin="5dp" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/maplayoutonsa">
-                            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                                android:name="com.google.android.gms.maps.MapFragment"
-                                android:id="@+id/mapsa"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:background="#00ffffff">
-
-                                <ImageView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
-                                    android:id="@+id/imageView"
-                                    android:clickable="true"
-                                    android:onClick="openMap"
-                                    android:baselineAlignBottom="false"
-                                    android:foregroundGravity="center"
-                                    android:paddingTop="10dp"
-                                    android:paddingBottom="10dp" />
-                            </LinearLayout>
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="7"
-                        android:id="@+id/params">
-
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:text="Оповестить когда буду рядом?"
-                            android:id="@+id/alarm_text"
-                            android:textColor="@color/colortext"
-                            android:layout_weight="1"
-                            android:gravity="center" />
-
-                        <Switch
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/alarm_switch"
-                            android:checked="false"
-                            android:layout_weight="2"
-                            android:gravity="center" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="7"
-                    android:id="@+id/buttons"
-                    android:background="@drawable/background_block_opacity40">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:id="@+id/half1">
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:id="@+id/half2">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-
-                        </FrameLayout>
-
-                        <ImageView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/imageView8"
-                            android:src="@drawable/background_block_opacity40"
-                            android:foregroundGravity="right"
-                            android:layout_weight="2"
-                            android:onClick="okButton" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
-
+            <TextView
+                android:text="+"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                android:textColor="@color/textcolor"
+                android:textSize="35sp"
+                android:layout_margin="5dp"/>
         </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
+
+

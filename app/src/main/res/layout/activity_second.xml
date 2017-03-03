@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_gradient"
+        android:background="@drawable/background1"
         android:id="@+id/bg_secondactivity"
         android:layout_below="@+id/custom_toolbar" >
 
@@ -25,7 +25,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/main_background_colors"
+                android:background="@drawable/background1"
                 android:layout_margin="10dp">
 
                 <LinearLayout
@@ -39,7 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/imageView4"
-                        android:background="@drawable/back"
+                        android:background="@drawable/background1"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="25dp"
                         android:layout_marginTop="20dp"
@@ -83,7 +83,7 @@
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:background="@drawable/default_rectangle"
+                android:background="@drawable/background_block_opacity40"
                 android:id="@+id/settings"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -229,7 +229,7 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="7"
                     android:id="@+id/buttons"
-                    android:background="@drawable/toolbar">
+                    android:background="@drawable/background_block_opacity40">
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -238,43 +238,7 @@
                         android:layout_weight="1"
                         android:id="@+id/half1">
 
-                        <ImageView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/imageView5"
-                            android:layout_weight="1"
-                            android:src="@drawable/share"
-                            android:layout_margin="12dp" />
 
-                        <ImageView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/imageView6"
-                            android:layout_weight="1"
-                            android:src="@drawable/attachment"
-                            android:layout_margin="12dp" />
-
-                        <ImageView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/deletebutton"
-                            android:src="@drawable/trash"
-                            android:onClick="delete"
-                            android:clickable="true"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="12dp"
-                            android:layout_weight="1" />
-
-                        <ImageView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/imageView7"
-                            android:layout_weight="1"
-                            android:clickable="false"
-                            android:src="@drawable/more1"
-                            android:layout_marginRight="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -295,7 +259,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:id="@+id/imageView8"
-                            android:src="@drawable/checkbox"
+                            android:src="@drawable/background_block_opacity40"
                             android:foregroundGravity="right"
                             android:layout_weight="2"
                             android:onClick="okButton" />

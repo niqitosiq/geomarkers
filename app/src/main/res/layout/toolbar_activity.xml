@@ -4,9 +4,8 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="65dp"
-    android:background="#6f8184"
-    android:minHeight="?attr/actionBarSize"
-    android:titleTextColor="#ffffff">
+    android:background="@drawable/background_block_opacity40"
+    android:minHeight="?attr/actionBarSize">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -17,6 +16,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView10"
 
-            android:src="@drawable/placeholder" />
+            android:src="@drawable/logo" />
     </LinearLayout>
 </android.support.v7.widget.Toolbar>

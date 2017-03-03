@@ -88,25 +88,6 @@ public class MainLayoutActivity extends AppCompatActivity implements View.OnClic
         }
         cursor.close();
         dbHelper.close();
-        // Генерация стандартных кнопок
-        LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout addbutton = new LinearLayout(this);
-        int gravity = Gravity.CENTER;
-        lParams.gravity = gravity;
-        addbutton.setOrientation(LinearLayout.VERTICAL);
-        addbutton.setBottom(5);
-        addbutton.setBackgroundResource(R.drawable.default_rectangle);
-        addbutton.setOnClickListener(this);
-        addbutton.setId(R.id.addbutton);
-        layout.addView(addbutton, lParams);
-        LinearLayout addplus = (LinearLayout) findViewById(R.id.addbutton);
-        ImageView imgv = new ImageView(this);
-        imgv.setBackgroundResource(R.drawable.plus);
-        LinearLayout.LayoutParams plusParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        plusParams.gravity = gravity;
-        plusParams.setMargins(10, 10, 10, 10);
-        plusParams.gravity = Gravity.CENTER;
-        addplus.addView(imgv, plusParams);
         // Листнер для анимации
         /*
         final ScrollView mainscroll = (ScrollView)findViewById(R.id.scroll);

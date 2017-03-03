@@ -1,138 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="examplecom.geomarkers.MainLayoutActivity"
-    android:background="@drawable/background_gradient">
-    <include layout="@layout/toolbar_activity"
-        android:id="@+id/custom_toolbar"/>
+    android:background="@drawable/background1"
+    tools:context="examplecom.geomarkers.MainLayoutActivity">
+
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/toolbar_activity"
+        android:visibility="visible" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/background"
-        android:layout_below="@+id/custom_toolbar">
+        android:layout_below="@+id/custom_toolbar"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/name_category"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/main_rect"
-            android:layout_weight="4">
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_block_opacity40"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/TodoList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Заметки"
+                    android:textColor="@color/textcolor"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/todolistlogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/notebook" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/others_rect"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/main_background_colors"
-                android:id="@+id/state_rect"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_weight="1"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="6"
-                    android:visibility="visible">
+                    android:background="@drawable/background_block_opacity50"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/imageView2"
-                        android:src="@drawable/back"
-                        android:layout_margin="7dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:visibility="invisible" />
-                </LinearLayout>
+                    <ScrollView
+                        android:id="@+id/scroll"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/name_category"
-                    android:layout_weight="3">
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:text="Заметки"
-                        android:id="@+id/TodoList"
-                        android:textSize="35dp"
-                        android:textColor="@color/colortext"
-                        android:gravity="center" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/listpad"
-                    android:layout_weight="5">
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="3"
-                        android:id="@+id/icon">
-
-                        <ImageView
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/notepadicon"
-                            android:layout_margin="12dp"
-                            android:src="@drawable/list" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="6"
-                    android:visibility="visible">
-
-                    <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/imageView3"
-                        android:src="@drawable/next"
-                        android:layout_margin="7dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:visibility="invisible" />
+                        <LinearLayout
+                            android:id="@+id/others"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="10dp" />
+                    </ScrollView>
                 </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/others_rect"
-            android:layout_weight="1">
-
-            <ScrollView
+            <LinearLayout
+                android:id="@+id/underblock"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/scroll"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp">
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentStart="false"
+                android:layout_weight="10"
+                android:background="@drawable/background_block_opacity40"
+                android:gravity="right"
+                android:minHeight="60dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/others">
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="horizontal"></LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="horizontal"
+                    android:paddingRight="20dp">
+
+                    <ImageView
+                        android:id="@+id/addbutton"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="7dp"
+                        android:src="@drawable/settings" />
+
+                    <ImageView
+                        android:id="@+id/mainsettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="7dp"
+                        android:src="@drawable/add" />
                 </LinearLayout>
-            </ScrollView>
-
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

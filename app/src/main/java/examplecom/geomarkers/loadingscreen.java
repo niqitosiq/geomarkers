@@ -40,8 +40,6 @@ public class loadingscreen extends AppCompatActivity {
 
                 startService(new Intent(loadingscreen.this, dome.class));
 
-                ImageView statusimg = (ImageView) findViewById(R.id.checkload2);
-                statusimg.setImageResource(R.drawable.ic_checked);
                 finish();
             }
         }, SPLASH_TIME_OUT);

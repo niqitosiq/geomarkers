@@ -53,9 +53,10 @@ public class SecondActivity extends AppCompatActivity {
             TextView lay = (TextView) findViewById(MassRoboto[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
         }
+        /*
         ImageView deletebutton = (ImageView)findViewById(R.id.deletebutton);
         deletebutton.setClickable(false);
-
+        */
 
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -85,7 +86,7 @@ public class SecondActivity extends AppCompatActivity {
                     namev.setText(name);
                     descv.setText(description);
                     switchv.setChecked(signal);
-                    deletebutton.setClickable(true);
+                    //deletebutton.setClickable(true);
 
                 }
                 else{

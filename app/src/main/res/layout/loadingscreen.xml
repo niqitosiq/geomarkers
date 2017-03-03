@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-              android:background="@color/colorBlock">
+              android:background="@drawable/background_block_opacity50">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/placeholder"
+            app:srcCompat="@drawable/logo"
             android:id="@+id/logo"
             android:layout_weight="1"
             android:paddingLeft="50dp"
@@ -43,13 +43,6 @@
             android:layout_weight="3"
             android:paddingLeft="100dp"
             android:paddingRight="100dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_notcheck"
-                android:id="@+id/checkload2"
-                android:layout_weight="1" />
 
         </LinearLayout>
 

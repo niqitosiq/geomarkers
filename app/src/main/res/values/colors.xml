@@ -5,22 +5,10 @@
     <color name="colorAccent">#9a887a</color>
 
 
-    <color name="colorBlock">#6f8184</color>
-    <color name="colorBlockGrad">#6f8184</color>
-
-    <color name="colorBlockPrimary">#6f8184</color>
-    <color name="colorBlockPrimaryGrad">#6f8184</color>
-
-    <color name="colorGradientstart">#6aa3d2</color>
-    <color name="colorGradientend">#43c5d2</color>
-
-
-
-    <color name="colortext">#E3F2FD</color>
-    <color name="colorlogos">#E3F2FD</color>
-    <color name="colorlogosblack">#585c5f</color>
-
-    <color name="shadowblockprimary">#1f000000</color>
-    <color name="shadowblock">#1f000000</color>
+    <color name="opacity40block">#66000000</color>
+    <color name="opacity50block">#85000000</color>
+    <color name="textcolor">#dddddd</color>
+    <color name="colortext">#dddddd</color>
+    <color name="colorlogos">#dddddd</color>
 
 </resources>

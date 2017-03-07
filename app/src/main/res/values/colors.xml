@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#595b5f</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#9a887a</color>
+
+
+    <color name="colorBlock">#6f8184</color>
+    <color name="colorBlockGrad">#6f8184</color>
+
+    <color name="colorBlockPrimary">#6f8184</color>
+    <color name="colorBlockPrimaryGrad">#6f8184</color>
+
+    <color name="colorGradientstart">#6aa3d2</color>
+    <color name="colorGradientend">#43c5d2</color>
+
+
+
+    <color name="colortext">#E3F2FD</color>
+    <color name="colorlogos">#E3F2FD</color>
+    <color name="colorlogosblack">#585c5f</color>
+
+    <color name="shadowblockprimary">#1f000000</color>
+    <color name="shadowblock">#1f000000</color>
+
 </resources>

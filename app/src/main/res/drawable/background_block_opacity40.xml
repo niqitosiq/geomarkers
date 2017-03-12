@@ -1,0 +1,11 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/background_opacity40"></solid>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

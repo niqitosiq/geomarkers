@@ -12,7 +12,7 @@
 
     <include
         android:id="@+id/custom_toolbar"
-        layout="@layout/activity_toolbar"
+        layout="@layout/layout_toolbar"
         android:visibility="visible" />
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:id="@+id/name_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_block_opacity40"
+            android:background="@drawable/background_block_opacity50"
             android:orientation="horizontal"
             android:padding="10dp">
 
@@ -42,7 +42,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/TodoList"
+                    android:id="@+id/mainText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -106,7 +106,7 @@
                                 android:padding="10dp">
 
                                 <TextView
-                                    android:id="@+id/textView"
+                                    android:id="@+id/title_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Название:"
@@ -118,7 +118,11 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
-                                    android:inputType="textPersonName" />
+                                    android:inputType="textPersonName"
+                                    android:textColor="@color/textcolor"
+                                    android:textColorHighlight="@color/textcolor"
+                                    android:textColorHint="@color/textcolor"
+                                    android:textCursorDrawable="@color/textcolor" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -128,20 +132,24 @@
                                 android:padding="10dp">
 
                                 <TextView
-                                    android:id="@+id/textView2"
+                                    android:id="@+id/description_text"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Описание:"
                                     android:textColor="@color/textcolor"
                                     android:textSize="18sp" />
 
+
                                 <EditText
-                                    android:id="@+id/editText3"
+                                    android:id="@+id/editText"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
-                                    android:inputType="textMultiLine" />
-
+                                    android:inputType="textPersonName"
+                                    android:textColor="@color/textcolor"
+                                    android:textColorHighlight="@color/textcolor"
+                                    android:textColorHint="@color/textcolor"
+                                    android:textCursorDrawable="@color/textcolor" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -157,7 +165,7 @@
                                     android:orientation="vertical">
 
                                     <TextView
-                                        android:id="@+id/textView3"
+                                        android:id="@+id/map_text"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="0"
@@ -189,7 +197,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
-                                android:padding="10dp">
+                                android:padding="10dp"
+                                android:visibility="gone">
 
                                 <TextView
                                     android:id="@+id/textView5"

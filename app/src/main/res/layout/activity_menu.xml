@@ -12,7 +12,7 @@
 
     <include
         android:id="@+id/custom_toolbar"
-        layout="@layout/activity_toolbar"
+        layout="@layout/layout_toolbar"
         android:visibility="visible" />
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:id="@+id/name_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_block_opacity40"
+            android:background="@drawable/background_block_opacity50"
             android:orientation="horizontal"
             android:padding="10dp">
 
@@ -82,22 +82,27 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
 
-                <LinearLayout
+                <ScrollView
+                    android:id="@+id/scrollview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="7"
-                    android:background="@drawable/background_block_opacity40"
-                    android:orientation="vertical">
+                    android:layout_weight="7">
 
-                    <ScrollView
+                    <LinearLayout
+                        android:id="@+id/maincontainer"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="7"
+                        android:background="@drawable/background_block_opacity40"
+                        android:orientation="vertical">
 
-                    </ScrollView>
-
-                </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
 
             </LinearLayout>
 
@@ -109,7 +114,7 @@
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentStart="false"
                 android:layout_weight="10"
-                android:background="@drawable/background_block_opacity40"
+                android:background="@drawable/background_block_opacity50"
                 android:gravity="right"
                 android:minHeight="60dp"
                 android:orientation="horizontal">
@@ -140,6 +145,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="startSettings"
                         android:padding="10dp"
                         android:src="@drawable/logo_add" />
                 </LinearLayout>

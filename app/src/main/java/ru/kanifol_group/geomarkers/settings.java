@@ -15,12 +15,12 @@ public class settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Integer[] MassIntro = new Integer[]{R.id.TodoList};
+        Integer[] MassIntro = new Integer[]{R.id.mainText};
         for (Integer i = 0; i < MassIntro.length; i++) {
             TextView lay = (TextView) findViewById(MassIntro[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Intro.otf"));
         }
-        Integer[] MassRoboto = new Integer[]{R.id.title_text, R.id.description_text, R.id.map_text, R.id.alarm_text};
+        Integer[] MassRoboto = new Integer[]{R.id.title_text, R.id.description_text, R.id.map_text};
         for (Integer i = 0; i < MassRoboto.length; i++) {
             TextView lay = (TextView) findViewById(MassRoboto[i]);
             lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));

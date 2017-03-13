@@ -4,18 +4,19 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="65dp"
-    android:background="@drawable/background_block_opacity40"
+    android:background="@drawable/background_block_opacity50"
     android:minHeight="?attr/actionBarSize"
     android:titleTextColor="#ffffff">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:weightSum="1">
 
         <ImageView
+            android:id="@+id/imageView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView10"
 
             android:src="@drawable/logo_placeholder" />
     </LinearLayout>

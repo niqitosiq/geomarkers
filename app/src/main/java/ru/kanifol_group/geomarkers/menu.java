@@ -1,18 +1,14 @@
 package ru.kanifol_group.geomarkers;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -70,13 +66,25 @@ public class menu extends AppCompatActivity {
             @Override
             public void onGlobalLayout() {
                 height.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                Log.i("Height", Integer.toString(height.getHeight()));
                 mainblock.setMinimumHeight(height.getHeight());
             }
         });
     }
     public void startSettings(View v) {
-        Intent intObj = new Intent(this, settings.class);startActivity(intObj);
+
+        Intent intObj = new Intent(this, settings.class);
+        intObj.putExtra("id", -1);
+        startActivity(intObj);
+
+    }
+    public void settingselem(View v){
+        LinearLayout layoutparent = (LinearLayout) v.getParent().getParent().getParent().getParent();
+        id = layoutparent.getId()-1;
+        Intent intObj = new Intent(this, settings.class);
+        intObj.putExtra("id", id);
+        startActivity(intObj); //стартуем СекондАктивити.класс для редактирования или удаления заметок
+        v.getParent();
+
 
     }
 

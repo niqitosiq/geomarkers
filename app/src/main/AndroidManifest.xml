@@ -20,6 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <uses-library android:name="com.google.android.maps" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyD3m6xTKs5DPw3H5Y3ON9rDiKdVGHfId44"></meta-data>
         <activity android:name="ru.kanifol_group.geomarkers.menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,5 +8,6 @@
     <color name="textcolor">#dddddd</color>
     <color name="colorlogos">#dddddd</color>
     <color name="name">#dddddd</color>
-    <color name="delimetr">#0adddddd</color>
+    <color name="colorlogos75alpha">#61dddddd</color>
+
 </resources>

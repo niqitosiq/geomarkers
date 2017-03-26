@@ -99,7 +99,10 @@
                         android:layout_marginTop="5dp"
                         android:layout_weight="7"
                         android:background="@drawable/background_block_opacity40"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp">
 
                     </LinearLayout>
                 </ScrollView>

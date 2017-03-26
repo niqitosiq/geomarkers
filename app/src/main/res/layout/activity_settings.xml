@@ -114,7 +114,7 @@
                                     android:textSize="18sp" />
 
                                 <EditText
-                                    android:id="@+id/editText"
+                                    android:id="@+id/title_edit"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
@@ -141,7 +141,7 @@
 
 
                                 <EditText
-                                    android:id="@+id/editText"
+                                    android:id="@+id/description_edit"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:ems="10"
@@ -254,12 +254,13 @@
                         android:padding="7dp" />
 
                     <ImageView
-                        android:id="@+id/mainsettings"
+                        android:id="@+id/okButton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:padding="7dp"
                         android:minHeight="20dp"
+                        android:onClick="okButton"
+                        android:padding="7dp"
                         android:src="@drawable/logo_add" />
                 </LinearLayout>
             </LinearLayout>

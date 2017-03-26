@@ -4,13 +4,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+import static java.lang.Integer.valueOf;
 
 /**
  * Created by danila on 26.03.17.
  */
 
 public class DBHelper extends SQLiteOpenHelper{
-    private SQLiteDatabase geomarkersDatabase;
+    private SQLiteDatabase geomarkersDatabase = getReadableDatabase();
     private int longOfAnswerMassive = 128;
 
 
@@ -40,19 +46,23 @@ public class DBHelper extends SQLiteOpenHelper{
 
 
     public String[][] getListMarkers(){
-        String[][] answer = {new String[longOfAnswerMassive],new String[longOfAnswerMassive],new String[longOfAnswerMassive]};
-        Cursor readebleDB = geomarkersDatabase.rawQuery("SELECT id,name,description FROM `geomarkers`",null);
+        String[][] answer = new String[longOfAnswerMassive][3];
+        String str = "SELECT id,name,description FROM `geomarkers`";
+        Cursor readebleDB = geomarkersDatabase.rawQuery(str,null);
         int idIndex = readebleDB.getColumnIndex("id");
         int nameIndex = readebleDB.getColumnIndex("name");
         int descriptionIndex = readebleDB.getColumnIndex("description");
         int j=0;
-        do{
-            answer[0][j]=String.valueOf(readebleDB.getInt(idIndex));
-            answer[1][j]=readebleDB.getString(nameIndex);
-            answer[2][j]=readebleDB.getString(descriptionIndex);
-            j++;
-        }while(readebleDB.moveToNext());
+        while(readebleDB.moveToNext()) {
 
+            //Log.i("test", Integer.toString(valueOf(readebleDB.getInt(idIndex))) + " " + readebleDB.getString(nameIndex) + " " + readebleDB.getString(descriptionIndex));
+            answer[j][0] = String.valueOf(readebleDB.getInt(idIndex));
+            answer[j][1] = readebleDB.getString(nameIndex);
+            answer[j][2] = readebleDB.getString(descriptionIndex);
+
+            j++;
+        }
+        Log.i("MASSIVEs", Arrays.deepToString(answer));
         return(answer); //возвращает двумерный массив подобный следующему [["1","2"],["купить кофе","блабла"],["описание1","описание2"]]
     }
 

@@ -30,38 +30,34 @@ public class menu extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.maincontainer);
         layout.removeAllViewsInLayout();
         makestartheight();// make start min height for note-block
+
+
+
         DBHelper dbHelper = new DBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query("geomarkers",null,null,null,null,null,null);
-        if(cursor.moveToFirst()){
-            int columnIdIndex = cursor.getColumnIndex("id");
-            int columnNameIndex = cursor.getColumnIndex("name");
-            int columnDescIndex = cursor.getColumnIndex("description");
-            int j =0;
-            do{
-                int id = cursor.getInt(columnIdIndex);
-                String name = cursor.getString(columnNameIndex);
-                String description = cursor.getString(columnDescIndex);
-                LayoutInflater inflater = LayoutInflater.from(this);
-                LinearLayout custom_layout = (LinearLayout) inflater.inflate(R.layout.layout_default, null, false);
-                TextView textmarker = (TextView) custom_layout.findViewById(R.id.name);
-                TextView desc = (TextView) custom_layout.findViewById(R.id.descriptionview);
-                desc.setText(description);
-                custom_layout.setId(id);
-                textmarker.setText(name);
-                layout.addView(custom_layout);
+        String[][] allNotes = dbHelper.getListMarkers();
+        for (int i = 0; i < allNotes.length; i++) {
+            //тут характеристики для каждого элемента
+            LayoutInflater inflater = LayoutInflater.from(this);
+            LinearLayout custom_layout = (LinearLayout) inflater.inflate(R.layout.layout_default, null, false);//Выборка шаблона для стандартного элемента.
+            if (allNotes[i][0] != null) {
+                //Айди
+                custom_layout.setId(Integer.parseInt(allNotes[i][0]));
+                //Название
+                ((TextView) custom_layout.findViewById(R.id.name)).setText(allNotes[i][1]);
+                //Описание
+                ((TextView) custom_layout.findViewById(R.id.descriptionview)).setText(allNotes[i][2]);
+                layout.addView(custom_layout); //Добавление элемента
+                //Добавление шрифтов
                 Integer[] MassRoboto = new Integer[]{R.id.name, R.id.descriptionview};
-                for (Integer i = 0; i < MassRoboto.length; i++) {
-                    TextView lay = (TextView) custom_layout.findViewById(MassRoboto[i]);
+                for (Integer j = 0; j < MassRoboto.length; j++) {
+                    TextView lay = (TextView) custom_layout.findViewById(MassRoboto[j]);
                     lay.setTypeface(Typeface.createFromAsset(getAssets(), "Roboto.ttf"));
                 }
-                j++;
-            }while(cursor.moveToNext());
+            }
+
         }
-        else{
-        }
-        cursor.close();
-        dbHelper.close();
+
+
 
     }
 

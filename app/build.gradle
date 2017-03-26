@@ -4,6 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "ru.kanifol_group.geomarkers"
         minSdkVersion 15
         targetSdkVersion 25

@@ -18,6 +18,10 @@ public class menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
+
+
         Integer[] MassIntro = new Integer[]{R.id.TodoList};
         for (Integer i = 0; i < MassIntro.length; i++) {
             TextView lay = (TextView) findViewById(MassIntro[i]);
@@ -26,9 +30,6 @@ public class menu extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.maincontainer);
         layout.removeAllViewsInLayout();
         makestartheight();// make start min height for note-block
-
-
-
         DBHelper dbHelper = new DBHelper(this);
         String[][] allNotes = dbHelper.getListMarkers();
         for (int i = 0; i < allNotes.length; i++) {
@@ -84,7 +85,6 @@ public class menu extends AppCompatActivity {
         intObj.putExtra("id", id);
         startActivity(intObj); //стартуем СекондАктивити.класс для редактирования или удаления заметок
         v.getParent();
-
 
     }
 

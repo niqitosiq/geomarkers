@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/image_background"
+        android:orientation="vertical"></LinearLayout>
+
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/layout_toolbar"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/custom_toolbar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/name_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_block_opacity50"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/TodoList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right|center"
+                    android:text="Уведомление"
+                    android:textColor="@color/textcolor"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/todolistlogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/logo_alarm" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/others_rect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:id="@+id/maincontainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="7"
+                    android:background="@drawable/background_block_opacity40"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Вы находитесь близко к метке"
+                        android:textAlignment="center"
+                        android:textColor="@color/textcolor"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:padding="15dp">
+
+                                <TextView
+                                    android:id="@+id/Name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0"
+                                    android:text="Название"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="28sp" />
+
+                                <TextView
+                                    android:id="@+id/description"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0"
+                                    android:text="Описание"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="18sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/background_block_opacity40"
+                                    android:onClick="closedel"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/imageView2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:padding="30dp"
+                                        app:srcCompat="@drawable/logo_trash" />
+
+                                    <TextView
+                                        android:id="@+id/closedel"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="4"
+                                        android:text="Закрыть и удалить"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/textcolor" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/background_block_opacity40"
+                                    android:onClick="close"
+                                    android:orientation="vertical"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/imageView"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:padding="30dp"
+                                        app:srcCompat="@drawable/logo_hide" />
+
+                                    <TextView
+                                        android:id="@+id/close"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="3"
+                                        android:text="Закрыть оповещение"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/textcolor" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

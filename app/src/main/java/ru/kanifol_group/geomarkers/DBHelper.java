@@ -47,17 +47,19 @@ public class DBHelper extends SQLiteOpenHelper{
 
 
     public String[][] getListMarkers(){
-        String[][] answer = new String[longOfAnswerMassive][3];
-        String str = "SELECT id,name,description FROM `geomarkers`";
+        String[][] answer = new String[longOfAnswerMassive][4];
+        String str = "SELECT id,name,description,signal FROM `geomarkers`";
         Cursor readebleDB = geomarkersReadableDatabase.rawQuery(str,null);
         int idIndex = readebleDB.getColumnIndex("id");
         int nameIndex = readebleDB.getColumnIndex("name");
         int descriptionIndex = readebleDB.getColumnIndex("description");
+        int signalIndex = readebleDB.getColumnIndex("signal");
         int j=0;
         while(readebleDB.moveToNext()) {
             answer[j][0] = String.valueOf(readebleDB.getInt(idIndex));
             answer[j][1] = readebleDB.getString(nameIndex);
             answer[j][2] = readebleDB.getString(descriptionIndex);
+            answer[j][3] = readebleDB.getString(signalIndex);
             j++;
         }
         return(answer); //возвращает двумерный массив подобный следующему [["айди1", "название1", "описание1"],["айди2", "название2", "описание2"],["айди3", "название3", "описание3"]]
@@ -79,7 +81,9 @@ public class DBHelper extends SQLiteOpenHelper{
         Cursor readebleDB = geomarkersReadableDatabase.rawQuery("SELECT * FROM `geomarkers` WHERE id="+id,null);
         return(readebleDB); //возвращается Cursor, который ПАРСИТСЯ подобно в методе DBHelper.getListMarkers()
     }
-
+    public void updateparamselem(String getstate, String getvalue, String editstate, String editvalue){
+        geomarkersWritableDatabase.execSQL("UPDATE `geomarkers`  SET " + editstate + "='" + editvalue +"' WHERE `geomarkers`." + getstate + "='" + getvalue + "'");
+    }
 
     public void updateDatabase(int id,String name,String description,double latitude,double longitude,int radius,int signal){ //для обновления маркера вызывать этот метод передовая всю информацию о маркере(изменяется маркер с id = передоваемому)
 

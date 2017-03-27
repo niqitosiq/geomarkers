@@ -6,11 +6,13 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class menu extends AppCompatActivity {
     int id = 0;
@@ -72,15 +74,14 @@ public class menu extends AppCompatActivity {
         });
     }
     public void startSettings(View v) {
-
         Intent intObj = new Intent(this, settings.class);
-        intObj.putExtra("id", -1);
+        intObj.putExtra("id", 0);
         startActivity(intObj);
 
     }
     public void settingselem(View v){
         LinearLayout layoutparent = (LinearLayout) v.getParent().getParent().getParent().getParent();
-        id = layoutparent.getId()-1;
+        id = layoutparent.getId();
         Intent intObj = new Intent(this, settings.class);
         intObj.putExtra("id", id);
         startActivity(intObj); //стартуем СекондАктивити.класс для редактирования или удаления заметок

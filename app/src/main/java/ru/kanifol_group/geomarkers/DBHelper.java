@@ -1,9 +1,13 @@
 package ru.kanifol_group.geomarkers;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.Arrays;
 
 /**
  * Created by danila on 26.03.17.
@@ -49,12 +53,6 @@ public class DBHelper extends SQLiteOpenHelper{
         int idIndex = readebleDB.getColumnIndex("id");
         int nameIndex = readebleDB.getColumnIndex("name");
         int descriptionIndex = readebleDB.getColumnIndex("description");
-        /*
-        int latitude = readebleDB.getColumnIndex("latitude");
-        int longitude = readebleDB.getColumnIndex("longitude");
-        int radius = readebleDB.getColumnIndex("radius"); // раскомитить как нада буент
-        int signal = readebleDB.getColumnIndex("signal");
-        */
         int j=0;
         while(readebleDB.moveToNext()) {
             answer[j][0] = String.valueOf(readebleDB.getInt(idIndex));
@@ -63,6 +61,17 @@ public class DBHelper extends SQLiteOpenHelper{
             j++;
         }
         return(answer); //возвращает двумерный массив подобный следующему [["айди1", "название1", "описание1"],["айди2", "название2", "описание2"],["айди3", "название3", "описание3"]]
+    }
+    public String[] getDatabyId(int id){
+        String[] answer = new String[2];
+        Cursor tables = geomarkersReadableDatabase.rawQuery("SELECT name,description FROM `geomarkers` WHERE `geomarkers`.id="+id, null);
+        int nameIndex = tables.getColumnIndex("name");
+        int descriptionIndex = tables.getColumnIndex("description");
+        while(tables.moveToNext()) {
+            answer[0] = tables.getString(nameIndex);
+            answer[1] = tables.getString(descriptionIndex);
+        }
+        return answer;
     }
 
 
@@ -86,6 +95,16 @@ public class DBHelper extends SQLiteOpenHelper{
 
     public void deleteMarker(int id){ //для удаления маркера вызывать этот метод передовая в него id удаляемого маркера
         geomarkersWritableDatabase.execSQL("DELETE FROM `geomarkers` WHERE `geomarkers`.id="+id);
+    }
+    public void appendBase(String name,String description,double latitude,double longitude,int radius,int signal){
+        ContentValues cv = new ContentValues();
+        cv.put("name",name);
+        cv.put("description", description);
+        cv.put("latitude",latitude);
+        cv.put("longitude",longitude);
+        cv.put("signal", signal);
+        cv.put("radius",radius);
+        geomarkersWritableDatabase.insert("geomarkers", null, cv);
     }
 
 

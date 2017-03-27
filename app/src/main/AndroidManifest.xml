@@ -37,19 +37,18 @@
         </activity>
         <activity
             android:name=".settings"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
 
         <service
             android:name=".notificationservice"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
-                android:name=".notification"
-                android:showOnLockScreen="true"
-                android:screenOrientation="sensorPortrait">
-
-        </activity>
+            android:name=".notification"
+            android:screenOrientation="sensorPortrait"
+            android:showOnLockScreen="true"></activity>
+        <activity android:name=".map"></activity>
     </application>
 
 </manifest>

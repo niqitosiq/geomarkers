@@ -189,7 +189,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="150dp"
                                     android:layout_weight="4"
-                                    android:background="#ccc"></LinearLayout>
+                                    android:background="#ccc"
+                                    android:onClick="startMap"></LinearLayout>
 
                             </LinearLayout>
 

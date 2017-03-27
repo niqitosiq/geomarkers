@@ -94,4 +94,8 @@ public class settings extends AppCompatActivity {
 
 
     }
+    public void startMap(View v){
+        Intent mapint = new Intent(this, map.class);
+        startActivity(mapint);
+    }
 }

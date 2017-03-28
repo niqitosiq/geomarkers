@@ -88,5 +88,9 @@ public class DBHelper extends SQLiteOpenHelper{
         geomarkersWritableDatabase.execSQL("DELETE FROM `geomarkers` WHERE `geomarkers`.id="+id);
     }
 
+    public Cursor getLocationInfo(){
+        Cursor locInfo = geomarkersReadableDatabase.rawQuery("SELECT id,latitude,longitude,radius FROM `geomarkers` WHERE signal=1",null);
+        return(locInfo);
+    }
 
 }

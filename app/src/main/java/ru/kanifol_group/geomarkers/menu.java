@@ -1,5 +1,6 @@
 package ru.kanifol_group.geomarkers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;

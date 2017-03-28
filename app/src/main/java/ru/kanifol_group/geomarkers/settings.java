@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,18 +48,15 @@ public class settings extends AppCompatActivity {
     }
 
     private void startStatement(){
-
-        DBHelper dbHelper = new DBHelper(this);
-        String[][] allNotes = dbHelper.getListMarkers(); //Так же метод возвращает Широту, долготу и другие вкусности.
         int idintent = getIntent().getIntExtra("id", 0);
+        DBHelper dbHelper = new DBHelper(this);
+        String[] allNotes = dbHelper.getDatabyId(idintent);
             //тут характеристики для каждого элемента
-            if (idintent!=-1) {
-                if (allNotes[idintent][0] != null) {
-                    //Ввод названия
-                    ((EditText) findViewById(R.id.title_edit)).setText(allNotes[idintent][1]);
-                    //Ввод описания
-                    ((EditText) findViewById(R.id.description_edit)).setText(allNotes[idintent][2]);
-                }
+            if (idintent!=0) {
+                //Ввод названия
+                ((EditText) findViewById(R.id.title_edit)).setText(allNotes[0]);
+                //Ввод описания
+                ((EditText) findViewById(R.id.description_edit)).setText(allNotes[1]);
             }
         }
 
@@ -66,11 +64,9 @@ public class settings extends AppCompatActivity {
         final EditText nametext = (EditText) findViewById(R.id.title_edit);
         final EditText descriptiontext = (EditText) findViewById(R.id.description_edit);//обьявляеем поля ввода
 
-        int idintent = getIntent().getIntExtra("id",-1);// Получение айди элемента на который было совершено покушение
+        int idintent = getIntent().getIntExtra("id",0);// Получение айди элемента на который было совершено покушение
 
-        if (idintent == -1) {
-
-            ContentValues cv = new ContentValues();
+        if (idintent == 0) {
 
             if (nametext.getText().toString().length() < 1) {
                 Toast toast = Toast.makeText(getApplicationContext(), //проверяем полноту 1-ого поля ввода
@@ -79,19 +75,31 @@ public class settings extends AppCompatActivity {
             } else {
                 //подготавливаем данные к отправке
                 DBHelper updater = new DBHelper(this);
-                updater.updateDatabase(idintent+1, nametext.getText().toString(), descriptiontext.getText().toString(), latitudeFromMap, longitudeFromMap, 30, 1);
+                updater.appendBase(nametext.getText().toString(), descriptiontext.getText().toString(), latitudeFromMap, longitudeFromMap, 30, 1);
                 Intent intent = new Intent(this, menu.class);
                 startActivity(intent);
             }
         } else {
             DBHelper updater = new DBHelper(this);
-            updater.updateDatabase(idintent+1, nametext.getText().toString(), descriptiontext.getText().toString(), latitudeFromMap, longitudeFromMap, 30, 1);
+            updater.updateDatabase(idintent, nametext.getText().toString(), descriptiontext.getText().toString(), latitudeFromMap, longitudeFromMap, 30, 1);
             Intent intent = new Intent(this, menu.class);
             startActivity(intent);
 
 
         }
 
+
+    }
+    public void startMap(View v){
+        Intent mapint = new Intent(this, map.class);
+        startActivity(mapint);
+    }
+    public void delete(View v){
+        int idintent = getIntent().getIntExtra("id",0);
+        DBHelper deleter = new DBHelper(this);
+        deleter.deleteMarker(idintent);
+        Intent intent = new Intent(this, menu.class);
+        startActivity(intent);
 
     }
 }

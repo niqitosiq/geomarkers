@@ -162,7 +162,8 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="0"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -175,12 +176,11 @@
                                         android:textSize="18sp" />
 
                                     <TextView
-                                        android:id="@+id/textView4"
+                                        android:id="@+id/geotext"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="0"
                                         android:gravity="bottom|right"
-                                        android:text="г.Задрипердищеск р.Патреоцкий ул.Пупкина д.Залупкина 49"
                                         android:textColor="@color/textcolor" />
 
                                 </LinearLayout>
@@ -188,9 +188,9 @@
                                 <LinearLayout
                                     android:id="@+id/fragment"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="150dp"
-                                    android:layout_weight="4"
-                                    android:background="#ccc"
+                                    android:layout_height="140dp"
+                                    android:layout_weight="10"
+                                    android:background="@drawable/image_map"
                                     android:onClick="startMap"></LinearLayout>
 
                             </LinearLayout>

@@ -48,15 +48,18 @@ public class settings extends AppCompatActivity {
     }
 
     private void startStatement(){
-        int idintent = getIntent().getIntExtra("id", 0);
-        DBHelper dbHelper = new DBHelper(this);
-        String[] allNotes = dbHelper.getDatabyId(idintent);
+        
             //тут характеристики для каждого элемента
-            if (idintent!=0) {
-                //Ввод названия
-                ((EditText) findViewById(R.id.title_edit)).setText(allNotes[0]);
-                //Ввод описания
-                ((EditText) findViewById(R.id.description_edit)).setText(allNotes[1]);
+            if (idintent != 0) {
+                	DBHelper dbHelper = new DBHelper(this);
+                	String[] allNotes = dbHelper.getDatabyId(idintent);
+					//Ввод названия
+                    ((EditText) findViewById(R.id.title_edit)).setText(allNotes[1]);
+                    //Ввод описания
+                    ((EditText) findViewById(R.id.description_edit)).setText(allNotes[2]);
+                    //Ввод координат
+                    ((TextView)findViewById(R.id.geotext)).setText(allNotes[4]+", "+allNotes[5]);
+                
             }
         }
 
@@ -91,7 +94,8 @@ public class settings extends AppCompatActivity {
 
     }
     public void startMap(View v){
-        Intent mapint = new Intent(this, map.class);
+            mapint.putExtra("name", nametext);
+            mapint.putExtra("description", desctext);
         startActivity(mapint);
     }
     public void delete(View v){

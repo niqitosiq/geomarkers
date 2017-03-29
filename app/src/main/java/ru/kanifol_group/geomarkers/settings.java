@@ -1,4 +1,4 @@
-package ru.kanifol_group.geomarkers;
+﻿package ru.kanifol_group.geomarkers;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -66,6 +66,18 @@ public class settings extends AppCompatActivity {
                 longitude = Double.parseDouble(allNotes[3]);
                 radiusFromMap = Integer.parseInt(allNotes[4]);
                 //Log.d("_____settings.class:","radius:"+allNotes[4]);
+        
+            //тут характеристики для каждого элемента
+            if (idintent != 0) {
+                	DBHelper dbHelper = new DBHelper(this);
+                	String[] allNotes = dbHelper.getDatabyId(idintent);
+					//Ввод названия
+                    ((EditText) findViewById(R.id.title_edit)).setText(allNotes[1]);
+                    //Ввод описания
+                    ((EditText) findViewById(R.id.description_edit)).setText(allNotes[2]);
+                    //Ввод координат
+                    ((TextView)findViewById(R.id.geotext)).setText(allNotes[4]+", "+allNotes[5]);
+                
             }
                 if(getIntent().getDoubleExtra("latitude",0)!=0){
                     latitude = getIntent().getDoubleExtra("latitude",0);
@@ -121,6 +133,8 @@ public class settings extends AppCompatActivity {
         //}
         mapint.putExtra("latitude",latitude);
         mapint.putExtra("longitude",longitude);
+            mapint.putExtra("name", nametext);
+            mapint.putExtra("description", desctext);
         startActivity(mapint);
     }
     public void delete(View v){

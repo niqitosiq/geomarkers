@@ -20,9 +20,11 @@ public class Handwheel extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //domeMain serviceDome = new domeMain(this,"Service");
+        Dome dome = new Dome(this);
+        dome.startAsService();
+        //new Thread(dome).start();
         //return super.onStartCommand(intent, flags, startId);
-        return Service.START_STICKY;
+        return Service.START_NOT_STICKY;
     }
     @Override
     public void onDestroy() {

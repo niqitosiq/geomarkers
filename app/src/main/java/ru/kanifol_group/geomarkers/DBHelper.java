@@ -65,13 +65,19 @@ public class DBHelper extends SQLiteOpenHelper{
         return(answer); //возвращает двумерный массив подобный следующему [["айди1", "название1", "описание1"],["айди2", "название2", "описание2"],["айди3", "название3", "описание3"]]
     }
     public String[] getDatabyId(int id){
-        String[] answer = new String[2];
-        Cursor tables = geomarkersReadableDatabase.rawQuery("SELECT name,description FROM `geomarkers` WHERE `geomarkers`.id="+id, null);
+        String[] answer = new String[5];
+        Cursor tables = geomarkersReadableDatabase.rawQuery("SELECT name,description,latitude,longitude,radius FROM `geomarkers` WHERE `geomarkers`.id="+id, null);
         int nameIndex = tables.getColumnIndex("name");
         int descriptionIndex = tables.getColumnIndex("description");
+        int latIndex = tables.getColumnIndex("latitude");
+        int lonIndex = tables.getColumnIndex("longitude");
+        int radiusIndex = tables.getColumnIndex("radius");
         while(tables.moveToNext()) {
             answer[0] = tables.getString(nameIndex);
             answer[1] = tables.getString(descriptionIndex);
+            answer[2] = String.valueOf(tables.getDouble(latIndex));
+            answer[3] = String.valueOf(tables.getDouble(lonIndex));
+            answer[4] = String.valueOf(tables.getInt(radiusIndex));
         }
         return answer;
     }
@@ -112,7 +118,7 @@ public class DBHelper extends SQLiteOpenHelper{
     }
 
     public Cursor getLocationInfo(){
-        Cursor locInfo = geomarkersReadableDatabase.rawQuery("SELECT id,latitude,longitude,radius FROM `geomarkers` WHERE signal=1",null);
+        Cursor locInfo = geomarkersReadableDatabase.rawQuery("SELECT id,latitude,longitude,radius,name,description FROM `geomarkers` WHERE signal=1",null);
         return(locInfo);
     }
 

@@ -25,7 +25,7 @@ public class menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
+        startService(new Intent(this,Handwheel.class));
 
 
 
@@ -41,6 +41,7 @@ public class menu extends AppCompatActivity {
 
         DBHelper dbHelper = new DBHelper(this);
         String[][] allNotes = dbHelper.getListMarkers();
+        dbHelper.close();
         for (int i = 0; i < allNotes.length; i++) {
             //тут характеристики для каждого элемента
             LayoutInflater inflater = LayoutInflater.from(this);
@@ -105,6 +106,7 @@ public class menu extends AppCompatActivity {
             default:
                 break;
         }
+        dbHelper.close();
     }
     public void startSettings(View v) {
         Intent intObj = new Intent(this, settings.class);
@@ -117,6 +119,7 @@ public class menu extends AppCompatActivity {
         id = layoutparent.getId();
         Intent intObj = new Intent(this, settings.class);
         intObj.putExtra("id", id);
+        //Log.d("_____menu.class:","id:"+id);
         startActivity(intObj); //стартуем СекондАктивити.класс для редактирования или удаления заметок
         v.getParent();
 

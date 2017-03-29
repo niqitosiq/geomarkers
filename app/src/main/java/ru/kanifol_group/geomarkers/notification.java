@@ -75,6 +75,9 @@ public class notification extends AppCompatActivity {
         Vibrator vibrate = (Vibrator)this.getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {100, 600, 200};
         vibrate.vibrate(pattern, -1);//Выключение вибрации
+        DBHelper database = new DBHelper(this);
+        database.deleteMarker(getIntent().getIntExtra("id",0));
+        database.close();
         player.stop();//остановка звука
         this.finish();//завершение активити
         //Реализация потом
